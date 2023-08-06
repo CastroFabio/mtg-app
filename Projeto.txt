@@ -1,0 +1,63 @@
+ - Sistema para conseguir gameficar, com
+ pontos por player, para gastar na loja.
+
+Páginas: 
+  - Login/Cadastro
+  - Ver os pontos que ela tem
+  - Histórico de vitórias na liga
+
+1. Vai bater no endpoint
+    Axios para fazer requisicoes     
+    requiscao para endpoint /auth/login     
+    Payload: {"username": "john", "password": "changeme"}      
+        Retornos esperados:         
+            Status: 200         
+            Response: {     
+                "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiam9obiIsImlhdCI6MTY4NjcxMjIxNSwiZXhwIjoxNjg2NzEyMjc1fQ.fdDvTwj4bPgiPBnloEz5YKF_ym4crTsfSPtdoAbt47M" }
+            
+            Status: 401         
+            Response:{
+                "statusCode": 401,
+                "message": "Unauthorized" 
+                }
+    https://beeceptor.com/ (para simular minha API)
+    Token da JWT
+
+
+Authorization: "codigo"
+
+USER
+    Tabelas de userPoints (pedroPoints)
+
+Tabelas:
+    Torneio           (idTorneio)
+    TorneioSerie     (idTorneio, torneioSerie) 
+    TorneioDataUser   (idUser, userPoints) [as pessoas que participam do torneio] 
+
+
+Pages HORSE:
+    Cadastrar/visualizar torneio
+    Cadastrar usuários 
+    Login user
+    Cadastro user
+
+LOGIN:
+    1. Cadastro. Segundo campo para confirmar a senha.
+
+
+ETAPAS:
+    1. Backend
+    2. Frontend
+    3. AWS
+
+Features:
+    1. Consultar um valor de carta.
+    2. Ver a pontuação de todo mundo
+    3. Granular a info.
+        3.1. Campeonato são todas as séries.
+        3.2. Série é o dia dentro de um campeonato que os players vão jogar
+        um contra o outro.
+        3.3. Rodada é o player vs player naquele dia.
+    4. 
+    5. 
+
