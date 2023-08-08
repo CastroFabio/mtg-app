@@ -1,16 +1,18 @@
-const Campeonatos = (props) => {
-  return (
-    <div>
-      <h1>Campeonatos</h1>
-      <p>Campeonato 1</p>
-      <p>Campeonato 2</p>
-      <p>Campeonato 3</p>
-      <p>Campeonato 4</p>
-      <p>Campeonato 5</p>
+import React, { useContext } from "react";
+import { FaTrashCan, FaRegPenToSquare } from "react-icons/fa6";
 
-      <button onClick={props.mostrarSeries}>Series</button>
-    </div>
+import { AdminContext } from "../../context/admin.context";
+
+const Campeonato = ({ campeonato }) => {
+  const { currentAdmin } = useContext(AdminContext);
+  const { name } = campeonato;
+  return currentAdmin ? (
+    <p>
+      <FaTrashCan /> <FaRegPenToSquare /> {name}
+    </p>
+  ) : (
+    <p>{name}</p>
   );
 };
 
-export default Campeonatos;
+export default Campeonato;

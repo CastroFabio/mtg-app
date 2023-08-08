@@ -1,4 +1,5 @@
 import { useState } from "react";
+import User from "../user.component";
 
 const defaultFormFields = {
   username: "",
@@ -8,9 +9,8 @@ const defaultFormFields = {
 
 const SignIn = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
-  const { username, password, confirmPassword } = formFields;
+  const { username, password } = formFields;
 
-  console.log(formFields);
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormFields({ ...formFields, [name]: value });
@@ -18,6 +18,7 @@ const SignIn = () => {
 
   return (
     <div>
+      {/* <User /> */}
       <h1>Login</h1>
       <form onSubmit={() => {}}>
         <lablel>Username</lablel>
@@ -28,7 +29,7 @@ const SignIn = () => {
           name="username"
           value={username}
         ></input>
-
+        <br />
         <lablel>Senha</lablel>
         <input
           type="password"

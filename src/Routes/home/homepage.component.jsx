@@ -1,20 +1,17 @@
-import CadastroAdmin from "../../components/administrador/cadastroAdmin/cadastroAdmin.component";
-import Campeonatos from "../../components/campeonatos/campeonato.component";
-import Rodada from "../../components/rodada/rodada.component";
-import Series from "../../components/serie/serie.component";
+import Campeonatos from "../../components/campeonatos/campeonatos.component";
+import Rodadas from "../../components/rodadas/rodadas.component";
+import Series from "../../components/series/series.component";
 
-import { Fragment, useState } from "react";
+import { campeonatosDB } from "../../assets/mockDB";
 
-const Home = () => {
+import { Fragment, useContext, useState } from "react";
+
+import { AdminContext } from "../../context/admin.context";
+
+const Home = (props) => {
   const [campeonatos, setCampeonatos] = useState(true);
   const [series, setSeries] = useState(false);
   const [rodadas, setRodadas] = useState(false);
-
-  const [admin, setAdmin] = useState(false);
-
-  const administradorOnline = () => {
-    setAdmin(!admin);
-  };
 
   const mostrarCampeonatos = () => {
     setCampeonatos(true);
@@ -32,20 +29,40 @@ const Home = () => {
     setRodadas(true);
   };
 
+  const { setCurrentAdmin, currentAdmin } = useContext(AdminContext);
+
+  const toggleAdministrador = () => {
+    setCurrentAdmin(!currentAdmin);
+  };
+
   return (
     <div>
-      <div>
-        <button onClick={administradorOnline}>Administrador?</button>
-        {admin ? (
-          <CadastroAdmin />
-        ) : (
-          <Fragment>
-            {campeonatos && <Campeonatos mostrarSeries={mostrarSeries} />}
-            {series && <Series mostrarRodadas={mostrarRodadas} />}
-            {rodadas && <Rodada mostrarCampeonatos={mostrarCampeonatos} />}
-          </Fragment>
+      {currentAdmin ? (
+        <button onClick={toggleAdministrador}>Administrador? Sim</button>
+      ) : (
+        <button onClick={toggleAdministrador}>Administrador? Não</button>
+      )}
+
+      <Fragment>
+        {campeonatos && (
+          <Campeonatos
+            mostrarSeries={mostrarSeries}
+            campeonatosDB={campeonatosDB}
+          />
         )}
-      </div>
+        {series && (
+          <Series
+            mostrarRodadas={mostrarRodadas}
+            campeonatosDB={campeonatosDB}
+          />
+        )}
+        {rodadas && (
+          <Rodadas
+            mostrarCampeonatos={mostrarCampeonatos}
+            campeonatosDB={campeonatosDB}
+          />
+        )}
+      </Fragment>
     </div>
   );
 };

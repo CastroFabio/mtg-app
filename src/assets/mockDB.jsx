@@ -1,0 +1,92 @@
+export const campeonatosDB = [
+  {
+    id: 1,
+    name: "Liguinha",
+    serie: [
+      "Bolores vs Xandovisky",
+      "Neguinho vs Careca",
+      "Kaborge vs Bolores",
+      "Tio Chico vs Careca",
+    ],
+    rodada: [
+      ["Bolores", 3],
+      ["Xandovisky", 1],
+      ["Neguinho", 6],
+      ["Careca", 0],
+      ["Tio Chico", 3],
+      ["Kaborge", 3],
+    ],
+  },
+  {
+    id: 2,
+    name: "Commander",
+    serie: [
+      "Kaborge vs Xandovisky",
+      "Tio Chico vs Careca",
+      "Careca vs Bolores",
+      "Tio Chico vs Neguinho",
+    ],
+    rodada: [
+      ["Bolores", 3],
+      ["Xandovisky", 1],
+      ["Neguinho", 6],
+      ["Careca", 0],
+      ["Tio Chico", 3],
+      ["Kaborge", 3],
+    ],
+  },
+  {
+    id: 3,
+    name: "Liga LotR",
+    serie: [
+      "Kaborge vs Xandovisky",
+      "Tio Chico vs Kaborge",
+      "Xandovisky vs Tio Chico",
+      "Bolores vs Neguinho",
+    ],
+    rodada: [
+      ["Bolores", 3],
+      ["Xandovisky", 1],
+      ["Neguinho", 6],
+      ["Careca", 0],
+      ["Tio Chico", 3],
+      ["Kaborge", 3],
+    ],
+  },
+  {
+    id: 4,
+    name: "Liga Mata-mata",
+    serie: [
+      "Kaborge vs Neguinho",
+      "Careca vs Kaborge",
+      "Careca vs Tio Chico",
+      "Bolores vs Neguinho",
+    ],
+    rodada: [
+      ["Bolores", 3],
+      ["Xandovisky", 1],
+      ["Neguinho", 6],
+      ["Careca", 0],
+      ["Tio Chico", 3],
+      ["Kaborge", 3],
+    ],
+  },
+  {
+    id: 5,
+    name: "Ligão",
+    serie: [
+      "Xandovisky vs Neguinho",
+      "Careca vs Bolores",
+      "Xandovisky vs Tio Chico",
+      "Bolores vs Neguinho",
+    ],
+    rodada: [
+      ["Bolores", 3],
+      ["Xandovisky", 1],
+      ["Neguinho", 6],
+      ["Careca", 0],
+      ["Tio Chico", 3],
+      ["Kaborge", 3],
+    ],
+  },
+];

@@ -28,6 +28,7 @@ const SignUp = () => {
           name="username"
           value={username}
         ></input>
+        <br />
 
         <lablel>Senha</lablel>
         <input
@@ -37,6 +38,7 @@ const SignUp = () => {
           name="password"
           value={password}
         ></input>
+        <br />
 
         <lablel>Confirmar Senha</lablel>
         <input
