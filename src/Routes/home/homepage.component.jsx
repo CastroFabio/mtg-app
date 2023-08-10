@@ -2,13 +2,9 @@ import Campeonatos from "../../components/campeonatos/campeonatos.component";
 import Rodadas from "../../components/rodadas/rodadas.component";
 import Series from "../../components/series/series.component";
 
-import { campeonatosDB } from "../../assets/mockDB";
+import { Fragment, useState } from "react";
 
-import { Fragment, useContext, useState } from "react";
-
-import { AdminContext } from "../../context/admin.context";
-
-const Home = (props) => {
+const Home = () => {
   const [campeonatos, setCampeonatos] = useState(true);
   const [series, setSeries] = useState(false);
   const [rodadas, setRodadas] = useState(false);
@@ -29,41 +25,17 @@ const Home = (props) => {
     setRodadas(true);
   };
 
-  const { setCurrentAdmin, currentAdmin } = useContext(AdminContext);
-
-  const toggleAdministrador = () => {
-    setCurrentAdmin(!currentAdmin);
-  };
-
   return (
-    <div>
-      {currentAdmin ? (
-        <button onClick={toggleAdministrador}>Administrador? Sim</button>
-      ) : (
-        <button onClick={toggleAdministrador}>Administrador? Não</button>
+    <Fragment>
+      {campeonatos && <Campeonatos mostrarSeries={mostrarSeries} />}
+      {series && (
+        <Series
+          mostrarRodadas={mostrarRodadas}
+          mostrarCampeonatos={mostrarCampeonatos}
+        />
       )}
-
-      <Fragment>
-        {campeonatos && (
-          <Campeonatos
-            mostrarSeries={mostrarSeries}
-            campeonatosDB={campeonatosDB}
-          />
-        )}
-        {series && (
-          <Series
-            mostrarRodadas={mostrarRodadas}
-            campeonatosDB={campeonatosDB}
-          />
-        )}
-        {rodadas && (
-          <Rodadas
-            mostrarCampeonatos={mostrarCampeonatos}
-            campeonatosDB={campeonatosDB}
-          />
-        )}
-      </Fragment>
-    </div>
+      {rodadas && <Rodadas mostrarCampeonatos={mostrarCampeonatos} />}
+    </Fragment>
   );
 };
 

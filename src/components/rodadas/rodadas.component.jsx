@@ -1,46 +1,79 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 
 import Rodada from "./rodada.component";
 
-import { AdminContext } from "../../context/admin.context";
+import { BASE_URL, fazRequest } from "../../utils/client";
+import { endpointRoutes } from "../../utils/endpoitsRoutes";
 
-const Rodadas = ({ campeonatosDB, mostrarCampeonatos }) => {
+import { AdminContext } from "../../context/admin.context";
+import { CampeonatoContext } from "../../context/campeonato.context";
+
+var util = require("util");
+
+const Rodadas = ({ mostrarCampeonatos }) => {
   const { currentAdmin } = useContext(AdminContext);
+  const { campeonatoID, serieID, campeonatoName, serieName } =
+    useContext(CampeonatoContext);
+
+  const [rodadasUsers, setRodadasUsers] = useState([]);
+
+  useEffect(() => {
+    const asyncFn = async () => {
+      const response = await fazRequest(
+        util.format(
+          endpointRoutes.tournamentSerieRodada,
+          campeonatoID,
+          serieID
+        ),
+        "GET"
+      );
+
+      const data = await response.json();
+      setRodadasUsers(data);
+    };
+    asyncFn();
+  }, []);
+
+  const handleClick = () => {
+    mostrarCampeonatos();
+  };
 
   return (
     <div>
-      {currentAdmin ? (
-        <div>
-          <h1>Campeonato X - Serie X - Rodadas</h1>
-          {campeonatosDB
-            .filter(({ id }) => id < 2)
-            .map((campeonato) => (
+      {rodadasUsers[0] ? (
+        currentAdmin ? (
+          <div>
+            <h1>{`${campeonatoName} - ${serieName} - Rodadas`}</h1>
+            {rodadasUsers.map((campeonato) => (
               <Rodada key={campeonato.id} campeonato={campeonato} />
             ))}
-          <br />
-          <form type="submit">
-            <label>Nome</label>
-            <input type="text" />
             <br />
-            <label>Pontos</label>
-            <input type="text" />
-            <br />
-            <button>Salvar</button>
-            <button>Cancelar</button>
-          </form>
-        </div>
+            <form type="submit">
+              <label>Nome</label>
+              <input type="text" />
+              <br />
+              <label>Pontos</label>
+              <input type="text" />
+              <br />
+              <button>Salvar</button>
+              <button>Cancelar</button>
+            </form>
+          </div>
+        ) : (
+          <div>
+            <h1>{`${campeonatoName} - ${serieName} - Rodadas`}</h1>
+            {rodadasUsers.map((campeonato) => (
+              <Rodada key={campeonato.id} campeonato={campeonato} />
+            ))}
+          </div>
+        )
       ) : (
         <div>
-          <h1>Campeonato X - Serie X - Rodadas</h1>
-          {campeonatosDB
-            .filter(({ id }) => id < 2)
-            .map((campeonato) => (
-              <Rodada key={campeonato.id} campeonato={campeonato} />
-            ))}
+          <h1>{`${campeonatoName} - ${serieName} - Rodadas`}</h1>
+          <p>Não há registro de usuários.</p>
         </div>
       )}
-
-      <button onClick={mostrarCampeonatos}>Campeonatos</button>
+      <button onClick={handleClick}>Campeonato</button>
     </div>
   );
 };

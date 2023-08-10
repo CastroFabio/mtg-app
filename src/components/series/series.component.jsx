@@ -1,39 +1,68 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import Serie from "./serie.component";
 
+import { BASE_URL, fazRequest } from "../../utils/client";
+
 import { AdminContext } from "../../context/admin.context";
+import { CampeonatoContext } from "../../context/campeonato.context";
+import { endpointRoutes } from "../../utils/endpoitsRoutes";
 
-const Series = ({ mostrarRodadas, campeonatosDB }) => {
+var util = require("util");
+
+const Series = ({ mostrarCampeonatos, mostrarRodadas }) => {
   const { currentAdmin } = useContext(AdminContext);
+  const { campeonatoID, campeonatoName } = useContext(CampeonatoContext);
 
-  return currentAdmin ? (
-    <div>
-      <h1>Campeonato X - Series X </h1>
-      {campeonatosDB
-        .filter(({ id }) => id < 2)
-        .map((campeonato) => (
-          <Serie key={campeonato.id} campeonato={campeonato} />
+  const [series, setSeries] = useState([]);
+
+  useEffect(() => {
+    const asyncFn = async () => {
+      const response = await fazRequest(
+        util.format(endpointRoutes.tournamentSerie, campeonatoID),
+        "GET"
+      );
+
+      const data = await response.json();
+      setSeries(data);
+    };
+    asyncFn();
+  }, []);
+
+  const handleClick = () => {
+    mostrarCampeonatos();
+  };
+
+  return series[0] ? (
+    currentAdmin ? (
+      <div>
+        <p>{currentAdmin.toString()} Admin</p>
+        <h1>{`${campeonatoName} - Series`}</h1>
+        {series.map((serie) => (
+          <Serie mostrarRodadas={mostrarRodadas} key={serie.id} serie={serie} />
         ))}
-      <br />
-      <form type="submit">
-        <label>Nome</label>
-        <input type="text" />
         <br />
-        <button>Salvar</button>
-        <button>Cancelar</button>
-      </form>
-      <button onClick={mostrarRodadas}>Series</button>
-    </div>
+        <form type="submit">
+          <label>Nome</label>
+          <input type="text" />
+          <br />
+          <button>Salvar</button>
+          <button>Cancelar</button>
+        </form>
+      </div>
+    ) : (
+      <div>
+        <h1>{`${campeonatoName} - Séries`}</h1>
+        {series.map((serie) => (
+          <Serie mostrarRodadas={mostrarRodadas} key={serie.id} serie={serie} />
+        ))}
+      </div>
+    )
   ) : (
     <div>
-      <h1>Campeonato X - Series X </h1>
-      {campeonatosDB
-        .filter(({ id }) => id < 2)
-        .map((campeonato) => (
-          <Serie key={campeonato.id} campeonato={campeonato} />
-        ))}
-      <button onClick={mostrarRodadas}>Series</button>
+      <h1>{`${campeonatoName} - Séries`}</h1>
+      <p>Sem registro de séries</p>
+      <button onClick={handleClick}>Campeonato</button>
     </div>
   );
 };

@@ -1,48 +1,71 @@
-import { useState } from "react";
-import User from "../user.component";
+import React, { useState, useContext } from "react";
 
-const defaultFormFields = {
-  username: "",
-  password: "",
-  confirmPassword: "",
-};
+//import { UserContext } from "../../context/user.context";
+import { AdminContext } from "../../context/admin.context";
 
-const SignIn = () => {
-  const [formFields, setFormFields] = useState(defaultFormFields);
-  const { username, password } = formFields;
+import jwt from "jwt-decode";
+import { useNavigate } from "react-router-dom";
+import { fazRequest } from "../../utils/client";
+import { endpointRoutes } from "../../utils/endpoitsRoutes";
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormFields({ ...formFields, [name]: value });
+const Login = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  //const { setCurrentUser, currentUser } = useContext(UserContext);
+  const { setCurrentAdmin } = useContext(AdminContext);
+
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    try {
+      const body = JSON.stringify({ username, password });
+      const response = await fazRequest(
+        endpointRoutes.login,
+        "POST",
+        body,
+        false
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        const decodedPayload = jwt(data.access_token);
+
+        localStorage.setItem("accessToken", JSON.stringify(data.access_token));
+        localStorage.setItem(
+          "username",
+          JSON.stringify(decodedPayload.username)
+        );
+        localStorage.setItem("admin", JSON.stringify(decodedPayload.admin));
+
+        setCurrentAdmin(decodedPayload.admin);
+        navigate("/");
+      } else {
+        console.error("Login failed");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
     <div>
-      {/* <User /> */}
-      <h1>Login</h1>
-      <form onSubmit={() => {}}>
-        <lablel>Username</lablel>
-        <input
-          type="text"
-          required
-          onChange={handleChange}
-          name="username"
-          value={username}
-        ></input>
-        <br />
-        <lablel>Senha</lablel>
-        <input
-          type="password"
-          required
-          onChange={handleChange}
-          name="password"
-          value={password}
-        ></input>
-
-        <button type="submit">Login</button>
-      </form>
+      <h2>Login</h2>
+      <input
+        type="text"
+        placeholder="Username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <button onClick={handleLogin}>Login</button>
     </div>
   );
 };
 
-export default SignIn;
+export default Login;

@@ -8,14 +8,20 @@ import App from "./App";
 
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
+import { UserProvider } from "./context/user.context";
+import { CampeonatoProvider } from "./context/campeonato.context";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <AdminProvider>
-        <App />
-      </AdminProvider>
+      <UserProvider>
+        <AdminProvider>
+          <CampeonatoProvider>
+            <App />
+          </CampeonatoProvider>
+        </AdminProvider>
+      </UserProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

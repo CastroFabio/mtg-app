@@ -3,27 +3,24 @@ import React, { useContext } from "react";
 import { FaTrashCan, FaRegPenToSquare } from "react-icons/fa6";
 
 import { AdminContext } from "../../context/admin.context";
+import { CampeonatoContext } from "../../context/campeonato.context";
 
 const Rodada = ({ campeonato }) => {
   const { currentAdmin } = useContext(AdminContext);
-  const { rodada } = campeonato;
+  const { setRodadaID } = useContext(CampeonatoContext);
+
+  const { userId, points } = campeonato;
 
   return currentAdmin ? (
-    <div>
-      {rodada.map((jogador) => (
-        <p>
-          <FaTrashCan /> <FaRegPenToSquare /> {jogador[0]} {jogador[1]}
-        </p>
-      ))}
-    </div>
+    <li>
+      <a>
+        <FaTrashCan /> <FaRegPenToSquare /> {userId}
+      </a>
+    </li>
   ) : (
-    <div>
-      {rodada.map((jogador) => (
-        <p>
-          {jogador[0]} {jogador[1]}
-        </p>
-      ))}
-    </div>
+    <li>
+      {userId} {points} pts
+    </li>
   );
 };
 
