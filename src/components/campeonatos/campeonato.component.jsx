@@ -1,16 +1,15 @@
 import React, { useContext } from "react";
 import { FaTrashCan, FaRegPenToSquare } from "react-icons/fa6";
 
-import { AdminContext } from "../../context/admin.context";
 import { CampeonatoContext } from "../../context/campeonato.context";
-import { BASE_URL, fazRequest } from "../../utils/client";
+import { BASE_URL, fazRequest, getFromLocalStorage } from "../../utils/client";
 import { endpointRoutes } from "../../utils/endpoitsRoutes";
 
 const Campeonato = ({ campeonato, mostrarSeries }) => {
-  const { currentAdmin } = useContext(AdminContext);
-  const { setCampeonatoID, setCampeonatoName } = useContext(CampeonatoContext);
+  const { campeonatoID, setCampeonatoID, setCampeonatoName } =
+    useContext(CampeonatoContext);
 
-  const { name, campID } = campeonato;
+  const { name, id } = campeonato;
 
   //terminar
   const handleDelete = async (id) => {
@@ -18,12 +17,12 @@ const Campeonato = ({ campeonato, mostrarSeries }) => {
   };
 
   const handleClick = () => {
-    setCampeonatoID(campID);
+    setCampeonatoID(id);
     setCampeonatoName(name);
     mostrarSeries();
   };
 
-  return currentAdmin ? (
+  return getFromLocalStorage("admin") ? (
     <li>
       <a>
         <FaTrashCan />

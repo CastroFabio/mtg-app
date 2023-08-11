@@ -1,5 +1,13 @@
 export const BASE_URL = "http://localhost:3001";
 
+export const setInLocalStorage = (keyName, keyValue) => {
+  localStorage.setItem(keyName, keyValue);
+};
+
+export const getFromLocalStorage = (keyName) => {
+  return JSON.parse(localStorage.getItem(keyName));
+};
+
 export const fazRequest = async (
   URL,
   method,
@@ -12,9 +20,7 @@ export const fazRequest = async (
 
   if (isAccessTokenNeeded) {
     Object.assign(headers, {
-      Authorization: `Bearer ${JSON.parse(
-        localStorage.getItem("accessToken")
-      )}`,
+      Authorization: `Bearer ${getFromLocalStorage("accessToken")}`,
     });
   }
 
@@ -25,7 +31,7 @@ export const fazRequest = async (
     body,
   };
 
-  console.log("URL, request: ", completeURL, request);
+  console.log(`URL: ${completeURL} \nRequest: ${request}`);
 
   return await fetch(completeURL, request);
 };

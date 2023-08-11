@@ -3,7 +3,7 @@ import React, { useState } from "react";
 //import { UserContext } from "../../context/user.context";
 //import { AdminContext } from "../../context/admin.context";
 
-import { BASE_URL, fazRequest } from "../../utils/client";
+import { fazRequest } from "../../utils/client";
 
 import { useNavigate } from "react-router-dom";
 import { endpointRoutes } from "../../utils/endpoitsRoutes";
@@ -16,7 +16,6 @@ const defaultFormFields = {
 
 const SignUp = () => {
   //const { setCurrentUser, currentUser } = useContext(UserContext);
-  //const { setCurrentAdmin } = useContext(AdminContext);
 
   const navigate = useNavigate();
 

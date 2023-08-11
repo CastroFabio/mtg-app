@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from "react";
 
 import Rodada from "./rodada.component";
 
-import { BASE_URL, fazRequest } from "../../utils/client";
+import { BASE_URL, fazRequest, getFromLocalStorage } from "../../utils/client";
 import { endpointRoutes } from "../../utils/endpoitsRoutes";
 
 import { AdminContext } from "../../context/admin.context";
@@ -11,7 +11,6 @@ import { CampeonatoContext } from "../../context/campeonato.context";
 var util = require("util");
 
 const Rodadas = ({ mostrarCampeonatos }) => {
-  const { currentAdmin } = useContext(AdminContext);
   const { campeonatoID, serieID, campeonatoName, serieName } =
     useContext(CampeonatoContext);
 
@@ -41,7 +40,7 @@ const Rodadas = ({ mostrarCampeonatos }) => {
   return (
     <div>
       {rodadasUsers[0] ? (
-        currentAdmin ? (
+        getFromLocalStorage("admin") ? (
           <div>
             <h1>{`${campeonatoName} - ${serieName} - Rodadas`}</h1>
             {rodadasUsers.map((campeonato) => (

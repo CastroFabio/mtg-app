@@ -1,11 +1,10 @@
 import React, { useState, useContext } from "react";
 
 //import { UserContext } from "../../context/user.context";
-import { AdminContext } from "../../context/admin.context";
 
 import jwt from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-import { fazRequest } from "../../utils/client";
+import { fazRequest, setInLocalStorage } from "../../utils/client";
 import { endpointRoutes } from "../../utils/endpoitsRoutes";
 
 const Login = () => {
@@ -13,7 +12,6 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   //const { setCurrentUser, currentUser } = useContext(UserContext);
-  const { setCurrentAdmin } = useContext(AdminContext);
 
   const navigate = useNavigate();
 
@@ -31,14 +29,10 @@ const Login = () => {
         const data = await response.json();
         const decodedPayload = jwt(data.access_token);
 
-        localStorage.setItem("accessToken", JSON.stringify(data.access_token));
-        localStorage.setItem(
-          "username",
-          JSON.stringify(decodedPayload.username)
-        );
-        localStorage.setItem("admin", JSON.stringify(decodedPayload.admin));
+        setInLocalStorage("accessToken", JSON.stringify(data.access_token));
+        setInLocalStorage("username", JSON.stringify(decodedPayload.username));
+        setInLocalStorage("admin", JSON.stringify(decodedPayload.admin));
 
-        setCurrentAdmin(decodedPayload.admin);
         navigate("/");
       } else {
         console.error("Login failed");

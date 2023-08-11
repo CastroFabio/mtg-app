@@ -4,10 +4,11 @@ import { FaTrashCan, FaRegPenToSquare } from "react-icons/fa6";
 
 import { AdminContext } from "../../context/admin.context";
 import { CampeonatoContext } from "../../context/campeonato.context";
+import { getFromLocalStorage } from "../../utils/client";
 
 const Serie = ({ serie, mostrarRodadas }) => {
-  const { currentAdmin } = useContext(AdminContext);
-  const { setSerieID, setSerieName } = useContext(CampeonatoContext);
+  const { setSerieID, setSerieName, setCampeonatoID } =
+    useContext(CampeonatoContext);
 
   const { name, id } = serie;
 
@@ -17,7 +18,7 @@ const Serie = ({ serie, mostrarRodadas }) => {
     mostrarRodadas();
   };
 
-  return currentAdmin ? (
+  return getFromLocalStorage("admin") ? (
     <li>
       <a onClick={handleClick}>
         <FaTrashCan /> <FaRegPenToSquare /> {name}
