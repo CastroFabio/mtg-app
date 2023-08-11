@@ -35,7 +35,6 @@ const Series = ({ mostrarCampeonatos, mostrarRodadas }) => {
   return series[0] ? (
     getFromLocalStorage("admin") ? (
       <div>
-        <p>{getFromLocalStorage("admin").toString()} Admin</p>
         <h1>{`${campeonatoName} - Series`}</h1>
         {series.map((serie) => (
           <Serie mostrarRodadas={mostrarRodadas} key={serie.id} serie={serie} />

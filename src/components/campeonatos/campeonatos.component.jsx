@@ -4,6 +4,7 @@ import Campeonato from "./campeonato.component";
 
 import { BASE_URL, fazRequest, getFromLocalStorage } from "../../utils/client";
 import { endpointRoutes } from "../../utils/endpoitsRoutes";
+import { useNavigate } from "react-router-dom";
 
 const Campeonatos = ({ mostrarSeries }) => {
   const [campeonatos, setCampeonatos] = useState([]);
@@ -15,6 +16,7 @@ const Campeonatos = ({ mostrarSeries }) => {
       const data = await response.json();
       setCampeonatos(data);
     };
+    console.log("camepo", campeonatos);
     asyncFn();
   }, []);
 
@@ -23,13 +25,16 @@ const Campeonatos = ({ mostrarSeries }) => {
       <div>
         <h1>Campeonatos</h1>
         <ul>
-          {campeonatos.map((campeonato) => (
-            <Campeonato
-              key={campeonato.id}
-              campeonato={campeonato}
-              mostrarSeries={mostrarSeries}
-            />
-          ))}
+          {campeonatos.map((campeonato) => {
+            return (
+              <li key={campeonato.id}>
+                <Campeonato
+                  campeonato={campeonato}
+                  mostrarSeries={mostrarSeries}
+                />
+              </li>
+            );
+          })}
         </ul>
         <br />
         <form type="submit">

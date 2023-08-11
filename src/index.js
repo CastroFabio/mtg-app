@@ -13,17 +13,15 @@ import { CampeonatoProvider } from "./context/campeonato.context";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <UserProvider>
-        <AdminProvider>
-          <CampeonatoProvider>
-            <App />
-          </CampeonatoProvider>
-        </AdminProvider>
-      </UserProvider>
-    </BrowserRouter>
-  </React.StrictMode>
+  <BrowserRouter>
+    <UserProvider>
+      <AdminProvider>
+        <CampeonatoProvider>
+          <App />
+        </CampeonatoProvider>
+      </AdminProvider>
+    </UserProvider>
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
