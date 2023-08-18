@@ -2,23 +2,48 @@ import { useEffect, useState } from "react";
 
 import Campeonato from "./campeonato.component";
 
-import { BASE_URL, fazRequest, getFromLocalStorage } from "../../utils/client";
+import { fazRequest, getFromLocalStorage } from "../../utils/client";
 import { endpointRoutes } from "../../utils/endpoitsRoutes";
-import { useNavigate } from "react-router-dom";
+
+var util = require("util");
 
 const Campeonatos = ({ mostrarSeries }) => {
   const [campeonatos, setCampeonatos] = useState([]);
+  const [newName, setNewName] = useState("");
+  const [idCampeonatoForUpdate, setIDCampeonatoForUpdate] = useState(null);
 
   useEffect(() => {
     const asyncFn = async () => {
-      const response = await fazRequest(endpointRoutes.tournament, "GET");
-
-      const data = await response.json();
-      setCampeonatos(data);
+      getCampeonatos();
     };
-    console.log("camepo", campeonatos);
     asyncFn();
   }, []);
+
+  const getCampeonatos = async () => {
+    const response = await fazRequest(endpointRoutes.tournament, "GET");
+
+    const data = await response.json();
+    setCampeonatos(data);
+  };
+
+  const handleDelete = async (id) => {
+    await fazRequest(
+      util.format(endpointRoutes.tournamentDelete, id),
+      "DELETE"
+    );
+    getCampeonatos();
+  };
+
+  const handleUpdate = async (id) => {
+    const body = JSON.stringify({ name: newName });
+    console.log(body);
+    await fazRequest(
+      util.format(endpointRoutes.tournamentUpdate, id),
+      "PATCH",
+      body
+    );
+    getCampeonatos();
+  };
 
   return campeonatos.length ? (
     getFromLocalStorage("admin") ? (
@@ -29,8 +54,10 @@ const Campeonatos = ({ mostrarSeries }) => {
             return (
               <li key={campeonato.id}>
                 <Campeonato
+                  handleDelete={handleDelete}
                   campeonato={campeonato}
                   mostrarSeries={mostrarSeries}
+                  setIDCampeonatoForUpdate={setIDCampeonatoForUpdate}
                 />
               </li>
             );
@@ -39,7 +66,15 @@ const Campeonatos = ({ mostrarSeries }) => {
         <br />
         <form type="submit">
           <label>Nome</label>
-          <input type="text" />
+          <input
+            placeholder="Novo nome"
+            value={newName}
+            onChange={(e) => setNewName(e.target.value)}
+            onSubmit={handleUpdate(idCampeonatoForUpdate)}
+            type="text"
+          />
+          {idCampeonatoForUpdate}
+          {newName}
           <br />
           <button>Salvar</button>
           <button>Cancelar</button>
