@@ -11,6 +11,8 @@ const Campeonato = ({
   mostrarSeries,
   handleDelete,
   setIDCampeonatoForUpdate,
+  setTempCampeonatoName,
+  setEdit,
 }) => {
   const { setCampeonatoID, setCampeonatoName } = useContext(CampeonatoContext);
 
@@ -19,6 +21,7 @@ const Campeonato = ({
   const handleClick = () => {
     setCampeonatoID(id);
     setCampeonatoName(name);
+    setTempCampeonatoName(name);
     mostrarSeries();
   };
 
@@ -28,7 +31,13 @@ const Campeonato = ({
       <a onClick={() => handleDelete(id)}>
         <FaTrashCan />
       </a>
-      <a onClick={() => setIDCampeonatoForUpdate(id)}>
+      <a
+        onClick={() => {
+          setCampeonatoName(name);
+          setIDCampeonatoForUpdate(id);
+          setEdit(true);
+        }}
+      >
         <FaRegPenToSquare />
       </a>
     </div>
