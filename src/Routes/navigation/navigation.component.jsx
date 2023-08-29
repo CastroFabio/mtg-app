@@ -1,10 +1,11 @@
 import { Fragment, useContext, useState } from "react";
 import { Outlet } from "react-router-dom";
 
-import { UserContext } from "../../context/user.context";
+import { selectCurrentUser } from "../../store/user/user.selector";
+import { useSelector } from "react-redux";
 
 const Navigation = () => {
-  const { currentUser } = useContext(UserContext);
+  const currentUser = useSelector(selectCurrentUser);
 
   const [username, setUsername] = useState(() => {
     const saved = localStorage.getItem("username");
@@ -14,10 +15,17 @@ const Navigation = () => {
 
   return (
     <Fragment>
-      <div>
+      <section>
         <p>Olá {username}</p>
         <p>Você possui X PedroPoints!</p>
-      </div>
+      </section>
+      <section style={{ textAlign: "right" }}>
+        {currentUser ? (
+          <a href="/signin">Sign Out</a>
+        ) : (
+          <a href="/signin">Sign In</a>
+        )}
+      </section>
       <Outlet />
     </Fragment>
   );

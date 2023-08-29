@@ -2,11 +2,13 @@ import { useContext, useEffect, useState } from "react";
 
 import Serie from "./serie.component";
 
-import { BASE_URL, fazRequest, getFromLocalStorage } from "../../utils/client";
+import { fazRequest } from "../../utils/client";
 
 import { AdminContext } from "../../context/admin.context";
 import { CampeonatoContext } from "../../context/campeonato.context";
 import { endpointRoutes } from "../../utils/endpoitsRoutes";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../../store/user/user.selector";
 
 var util = require("util");
 
@@ -32,8 +34,10 @@ const Series = ({ mostrarCampeonatos, mostrarRodadas }) => {
     mostrarCampeonatos();
   };
 
-  return series[0] ? (
-    getFromLocalStorage("admin") ? (
+  const { admin } = useSelector(selectCurrentUser);
+
+  return series.length ? (
+    admin ? (
       <div>
         <h1>{`${campeonatoName} - Series`}</h1>
         {series.map((serie) => (

@@ -4,7 +4,8 @@ import { FaTrashCan, FaRegPenToSquare } from "react-icons/fa6";
 
 import { AdminContext } from "../../context/admin.context";
 import { CampeonatoContext } from "../../context/campeonato.context";
-import { getFromLocalStorage } from "../../utils/client";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../../store/user/user.selector";
 
 const Serie = ({ serie, mostrarRodadas }) => {
   const { setSerieID, setSerieName, setCampeonatoID } =
@@ -18,7 +19,9 @@ const Serie = ({ serie, mostrarRodadas }) => {
     mostrarRodadas();
   };
 
-  return getFromLocalStorage("admin") ? (
+  const { admin } = useSelector(selectCurrentUser);
+
+  return admin ? (
     <li>
       <a onClick={handleClick}>
         <FaTrashCan /> <FaRegPenToSquare /> {name}

@@ -1,50 +1,18 @@
-import React, { useContext, useDebugValue, useEffect, useState } from "react";
-import { FaTrashCan, FaRegPenToSquare } from "react-icons/fa6";
+import React from "react";
 
-import { CampeonatoContext } from "../../context/campeonato.context";
-import { fazRequest, getFromLocalStorage } from "../../utils/client";
-import { endpointRoutes } from "../../utils/endpoitsRoutes";
-import { useNavigate } from "react-router-dom";
+import { FaTrashCan, FaPenToSquare } from "react-icons/fa6";
 
-const Campeonato = ({
-  campeonato,
-  mostrarSeries,
-  handleDelete,
-  setIDCampeonatoForUpdate,
-  setTempCampeonatoName,
-  setEdit,
-}) => {
-  const { setCampeonatoID, setCampeonatoName } = useContext(CampeonatoContext);
+import { handleDelete } from "../../utils/campeonatos/campeonatos.utils";
 
-  const { name, id } = campeonato;
+const Campeonato = ({ campeonato, deletarCampeonatoDoArray }) => {
+  const { id, name } = campeonato;
 
-  const handleClick = () => {
-    setCampeonatoID(id);
-    setCampeonatoName(name);
-    setTempCampeonatoName(name);
-    mostrarSeries();
-  };
-
-  return getFromLocalStorage("admin") ? (
-    <div>
-      <a onClick={handleClick}>{name}</a>
-      <a onClick={() => handleDelete(id)}>
-        <FaTrashCan />
-      </a>
-      <a
-        onClick={() => {
-          setCampeonatoName(name);
-          setIDCampeonatoForUpdate(id);
-          setEdit(true);
-        }}
-      >
-        <FaRegPenToSquare />
-      </a>
-    </div>
-  ) : (
-    <div>
-      <a onClick={handleClick}>{name}</a>
-    </div>
+  return (
+    <li>
+      {name}
+      <FaTrashCan onClick={() => deletarCampeonatoDoArray(id)} />
+      <FaPenToSquare />
+    </li>
   );
 };
 

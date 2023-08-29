@@ -1,8 +1,13 @@
+import { Fragment, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+
 import Campeonatos from "../../components/campeonatos/campeonatos.component";
 import Rodadas from "../../components/rodadas/rodadas.component";
 import Series from "../../components/series/series.component";
 
-import { Fragment, useState } from "react";
+import { getCampeonatos } from "../../utils/campeonatos/campeonatos.utils";
+
+import { setCampeonatosMap } from "../../store/campeonatos/campeonatos.action";
 
 const Home = () => {
   const [campeonatos, setCampeonatos] = useState(true);

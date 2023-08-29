@@ -21,6 +21,7 @@ export const CampeonatoProvider = ({ children }) => {
   const [serieID, setSerieID] = useState("");
   const [serieName, setSerieName] = useState("");
   const [rodadaID, setRodadaID] = useState("");
+
   const value = {
     campeonatoID,
     setCampeonatoID,

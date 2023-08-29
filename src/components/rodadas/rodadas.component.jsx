@@ -2,11 +2,13 @@ import { useContext, useState, useEffect } from "react";
 
 import Rodada from "./rodada.component";
 
-import { BASE_URL, fazRequest, getFromLocalStorage } from "../../utils/client";
+import { fazRequest } from "../../utils/client";
 import { endpointRoutes } from "../../utils/endpoitsRoutes";
 
 import { AdminContext } from "../../context/admin.context";
 import { CampeonatoContext } from "../../context/campeonato.context";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../../store/user/user.selector";
 
 var util = require("util");
 
@@ -15,6 +17,8 @@ const Rodadas = ({ mostrarCampeonatos }) => {
     useContext(CampeonatoContext);
 
   const [rodadasUsers, setRodadasUsers] = useState([]);
+
+  const { admin } = useSelector(selectCurrentUser);
 
   useEffect(() => {
     const asyncFn = async () => {
@@ -39,8 +43,8 @@ const Rodadas = ({ mostrarCampeonatos }) => {
 
   return (
     <div>
-      {rodadasUsers[0] ? (
-        getFromLocalStorage("admin") ? (
+      {rodadasUsers.length ? (
+        admin ? (
           <div>
             <h1>{`${campeonatoName} - ${serieName} - Rodadas`}</h1>
             {rodadasUsers.map((campeonato) => (

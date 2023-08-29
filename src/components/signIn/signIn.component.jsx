@@ -1,17 +1,18 @@
-import React, { useState, useContext } from "react";
-
-//import { UserContext } from "../../context/user.context";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import jwt from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { fazRequest, setInLocalStorage } from "../../utils/client";
 import { endpointRoutes } from "../../utils/endpoitsRoutes";
 
+import { setCurrentUser } from "../../store/user/user.action";
+
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  //const { setCurrentUser, currentUser } = useContext(UserContext);
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
@@ -28,6 +29,8 @@ const Login = () => {
       if (response.ok) {
         const data = await response.json();
         const decodedPayload = jwt(data.access_token);
+
+        dispatch(setCurrentUser(decodedPayload));
 
         setInLocalStorage("accessToken", JSON.stringify(data.access_token));
         setInLocalStorage("username", JSON.stringify(decodedPayload.username));
