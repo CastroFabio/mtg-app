@@ -23,7 +23,7 @@ const Series = ({ mostrarCampeonatos, mostrarRodadas }) => {
       );
 
       const data = await response.json();
-      setSeries(data);
+      setSeries(data.entities);
     };
     asyncFn();
   }, []);

@@ -31,7 +31,7 @@ const Campeonatos = ({ mostrarSeries }) => {
     const response = await fazRequest(endpointRoutes.tournament, "GET");
 
     const data = await response.json();
-    setCampeonatos(data);
+    setCampeonatos(data.entities);
   };
 
   const handleDelete = async (id) => {

@@ -28,7 +28,7 @@ const Rodadas = ({ mostrarCampeonatos }) => {
       );
 
       const data = await response.json();
-      setRodadasUsers(data);
+      setRodadasUsers(data.entities);
     };
     asyncFn();
   }, []);
