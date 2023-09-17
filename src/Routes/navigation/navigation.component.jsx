@@ -1,27 +1,44 @@
-import { Fragment, useContext, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Fragment } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Outlet, useNavigate } from "react-router-dom";
 
-import { selectCurrentUser } from "../../store/user/user.selector";
-import { useSelector } from "react-redux";
+import {
+  logout,
+  selectCurrentUser,
+  selectCurrentUserIsLoggedIn,
+} from "../../store/user/userSlice";
 
 const Navigation = () => {
   const currentUser = useSelector(selectCurrentUser);
+  const currentUserIsLoggedIn = useSelector(selectCurrentUserIsLoggedIn);
 
-  const [username, setUsername] = useState(() => {
-    const saved = localStorage.getItem("username");
-    const initialValue = JSON.parse(saved);
-    return initialValue.charAt(0).toUpperCase() + initialValue.slice(1) || "";
-  });
+  const usernameFormatado = currentUser
+    ? currentUser.username.charAt(0).toUpperCase() +
+      currentUser.username.slice(1)
+    : "Usuário";
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   return (
     <Fragment>
       <section>
-        <p>Olá {username}</p>
+        <button onClick={() => navigate("/home")}>Home</button>
+
+        <p>Olá {usernameFormatado}!</p>
         <p>Você possui X PedroPoints!</p>
       </section>
       <section style={{ textAlign: "right" }}>
-        {currentUser ? (
-          <a href="/signin">Sign Out</a>
+        {currentUserIsLoggedIn ? (
+          <a
+            href="/signin"
+            onClick={() => {
+              dispatch(logout());
+              navigate("/signin");
+            }}
+          >
+            Sign Out
+          </a>
         ) : (
           <a href="/signin">Sign In</a>
         )}

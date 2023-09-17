@@ -1,7 +1,7 @@
 export const BASE_URL = "http://localhost:3001";
 
 export const setInLocalStorage = (keyName, keyValue) => {
-  localStorage.setItem(keyName, keyValue);
+  localStorage.setItem(keyName, JSON.stringify(keyValue));
 };
 
 export const getFromLocalStorage = (keyName) => {

@@ -1,66 +1,71 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import {
+  handleLogin,
+  selectCurrentUserError,
+  selectCurrentUser,
+} from "../../store/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
-import jwt from "jwt-decode";
-import { useNavigate } from "react-router-dom";
-import { fazRequest, setInLocalStorage } from "../../utils/client";
-import { endpointRoutes } from "../../utils/endpoitsRoutes";
+import "./signIn.styles.css";
+import { Navigate, useNavigate } from "react-router-dom";
 
-import { setCurrentUser } from "../../store/user/user.action";
+const defaultFormFields = {
+  username: "",
+  password: "",
+};
 
 const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [formFields, setFormFields] = useState(defaultFormFields);
+  const { username, password } = formFields;
+  const currentUserError = useSelector(selectCurrentUserError);
+  const currentUser = useSelector(selectCurrentUser);
 
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
-    try {
-      const body = JSON.stringify({ username, password });
-      const response = await fazRequest(
-        endpointRoutes.login,
-        "POST",
-        body,
-        false
-      );
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    dispatch(handleLogin(formFields))
+      .unwrap()
+      .then(() => {
+        setFormFields(defaultFormFields);
+      });
+  };
 
-      if (response.ok) {
-        const data = await response.json();
-        const decodedPayload = jwt(data.access_token);
-
-        dispatch(setCurrentUser(decodedPayload));
-
-        setInLocalStorage("accessToken", JSON.stringify(data.access_token));
-        setInLocalStorage("username", JSON.stringify(decodedPayload.username));
-        setInLocalStorage("admin", JSON.stringify(decodedPayload.admin));
-
-        navigate("/");
-      } else {
-        console.error("Login failed");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormFields({ ...formFields, [name]: value });
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button onClick={handleLogin}>Login</button>
+    <div className="login-page">
+      <div className="form">
+        <form className="login-form" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Username"
+            name="username"
+            value={username}
+            required
+            onChange={handleChange}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            name="password"
+            value={password}
+            required
+            onChange={handleChange}
+          />
+          <button>login</button>
+          <p className="message">
+            Not registered? <a href="/signup">Create an account</a>
+          </p>
+          {currentUserError ? <p>{currentUserError}</p> : null}
+
+          {currentUser ? <Navigate to="/home" replace={true} /> : null}
+        </form>
+      </div>
     </div>
   );
 };

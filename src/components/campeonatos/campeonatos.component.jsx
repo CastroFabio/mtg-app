@@ -1,41 +1,61 @@
-import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import { selectCampeonatoMap } from "../../store/campeonatos/campeonatos.selector";
-
-import { setCampeonatosMap } from "../../store/campeonatos/campeonatos.action";
+import { FaCirclePlus, FaPenToSquare, FaTrashCan } from "react-icons/fa6";
 
 import {
-  getCampeonatos,
-  handleDelete,
-} from "../../utils/campeonatos/campeonatos.utils";
-import Campeonato from "./campeonato.component";
+  fetchCampeonatos,
+  handleDeleteCampeonato,
+  saveIDCampeonato,
+  saveUpdateCampeonato,
+  selectAllCampeonatos,
+  selectCampeonatosLoading,
+} from "../../store/campeonatos/campeonatosSlice";
 
 const Campeonatos = () => {
+  const campeonatosArray = useSelector(selectAllCampeonatos);
+  const isLoading = useSelector(selectCampeonatosLoading);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   useEffect(() => {
-    const asyncFn = async () => {
-      await getCampeonatosArray();
-    };
-    asyncFn();
+    dispatch(fetchCampeonatos());
   }, []);
 
-  const getCampeonatosArray = async () => await getCampeonatos();
-
-  const deletarCampeonatoDoArray = async (id) => await handleDelete(id);
-
-  const { campeonatosMap } = useSelector(selectCampeonatoMap);
+  if (isLoading) {
+    return <h2>Loading...</h2>;
+  }
 
   return (
-    <div>
+    <section>
+      <button onClick={() => navigate("/criarCampeonato")}>
+        <FaCirclePlus />
+        Criar Campeonato
+      </button>
       <h1>Campeonatos</h1>
-      {campeonatosMap.map((campeonato) => {
-        return (
-          <ul key={campeonato.id}>
-            <Campeonato campeonato={campeonato} />
-          </ul>
-        );
-      })}
-    </div>
+      {campeonatosArray &&
+        campeonatosArray.map(({ id, name }) => {
+          return (
+            <div key={id}>
+              <a>{name}</a>{" "}
+              <FaPenToSquare
+                onClick={() => {
+                  dispatch(saveIDCampeonato(id));
+                  dispatch(saveUpdateCampeonato(id));
+                  navigate("/editarCampeonato");
+                }}
+              />
+              <FaTrashCan
+                onClick={() => {
+                  dispatch(handleDeleteCampeonato(id));
+                }}
+              />
+            </div>
+          );
+        })}
+    </section>
   );
 };
 
