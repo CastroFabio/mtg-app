@@ -3,6 +3,8 @@ import { fazRequest, setInLocalStorage } from "../../utils/client";
 import { endpointRoutes } from "../../utils/endpoitsRoutes";
 import jwt from "jwt-decode";
 
+var util = require("util");
+
 const initialState = {
   accessToken: null,
   currentUser: null,
@@ -10,11 +12,12 @@ const initialState = {
   loading: false,
   status: "idle" | "pending" | "succeeded" | "failed",
   error: null,
+  userPoints: 0,
 };
 
 export const handleLogin = createAsyncThunk(
   "user/handleLogin",
-  async ({ username, password }) => {
+  async ({ username, password }, { rejectWithValue }) => {
     try {
       const body = JSON.stringify({ username, password });
 
@@ -25,18 +28,22 @@ export const handleLogin = createAsyncThunk(
         false
       );
 
-      if (response.ok) {
+      if (response.ok === true) {
+
         const { access_token } = await response.json();
         const decodedPayload = jwt(access_token);
 
         setInLocalStorage("accessToken", access_token);
 
-        return [decodedPayload, access_token];
+        const responseBalance = await fazRequest(util.format(endpointRoutes.userBalance, decodedPayload.id), "GET");
+        const balance = await responseBalance.json();
+        
+        return {decodedPayload, access_token, points: balance.entities[0].points};
       } else {
-        console.error("Login failed");
+        return rejectWithValue("Login failed");
       }
     } catch (error) {
-      console.error("Error:", error);
+      return rejectWithValue(error);
     }
   }
 );
@@ -59,8 +66,9 @@ export const userSlice = createSlice({
         state.isLoggedIn = true;
         state.error = null;
         state.loading = false;
-        state.currentUser = action.payload[0];
-        state.accessToken = action.payload[1];
+        state.currentUser = action.payload.decodedPayload;
+        state.accessToken = action.payload.access_token;
+        state.userPoints = action.payload.points;
       })
       .addCase(handleLogin.pending, (state, action) => {
         state.status = "pending";
@@ -81,5 +89,8 @@ export const selectCurrentUserStatus = (state) => state.user.status;
 export const selectCurrentUserError = (state) => state.user.error;
 export const selectCurrentUserIsLoggedIn = (state) => state.user.isLoggedIn;
 export const selectCurrentUserAccessToken = (state) => state.user.accessToken;
+export const selectCurrentUserPoints = (state) => state.user.userPoints;
+
+
 
 export default userSlice.reducer;

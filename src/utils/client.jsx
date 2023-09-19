@@ -34,5 +34,9 @@ export const fazRequest = async (
   console.log(`URL: ${completeURL}`);
   console.log(request);
 
-  return await fetch(completeURL, request);
+  const response = await fetch(completeURL, request);
+
+  console.log(response);
+
+  return response;
 };

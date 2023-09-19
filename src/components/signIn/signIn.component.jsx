@@ -23,13 +23,10 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    dispatch(handleLogin(formFields))
-      .unwrap()
-      .then(() => {
-        setFormFields(defaultFormFields);
-      });
+    await dispatch(handleLogin(formFields));
+    setFormFields(defaultFormFields);
   };
 
   const handleChange = (event) => {

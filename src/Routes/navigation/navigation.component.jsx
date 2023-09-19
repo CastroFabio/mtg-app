@@ -6,11 +6,14 @@ import {
   logout,
   selectCurrentUser,
   selectCurrentUserIsLoggedIn,
+  selectCurrentUserPoints,
 } from "../../store/user/userSlice";
 
 const Navigation = () => {
   const currentUser = useSelector(selectCurrentUser);
   const currentUserIsLoggedIn = useSelector(selectCurrentUserIsLoggedIn);
+  const currentUserPoints = useSelector(selectCurrentUserPoints);
+
 
   const usernameFormatado = currentUser
     ? currentUser.username.charAt(0).toUpperCase() +
@@ -26,7 +29,7 @@ const Navigation = () => {
         <button onClick={() => navigate("/campeonato")}>Home</button>
 
         <p>Olá {usernameFormatado}!</p>
-        <p>Você possui X PedroPoints!</p>
+        <p>Você possui {currentUserPoints} PedroPoints!</p>
       </section>
       <section style={{ textAlign: "right" }}>
         {currentUserIsLoggedIn ? (
