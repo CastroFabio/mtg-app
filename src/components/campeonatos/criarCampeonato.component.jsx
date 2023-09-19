@@ -1,8 +1,5 @@
 import { useState } from "react";
-import {
-  fetchCampeonatos,
-  handleCreateCampeonato,
-} from "../../store/campeonatos/campeonatosSlice";
+import { handleCreateCampeonato } from "../../store/campeonatos/campeonatosSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -20,6 +17,7 @@ const CriarCampeonato = () => {
     e.preventDefault();
     dispatch(handleCreateCampeonato({ name: tempCampeonatoName }));
     setTempCampeonatoName(" ");
+    navigate("/campeonato");
   };
   return (
     <form onSubmit={handleSubmit}>

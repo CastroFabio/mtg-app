@@ -17,14 +17,11 @@ const EditarCampeonato = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const campeonatoID = useSelector(selectIDCampeonato);
+  const campeonato = useSelector(selectCampeonatoUpdate);
 
   useEffect(() => {
-    dispatch(saveUpdateCampeonato(campeonatoID));
+    dispatch(saveUpdateCampeonato(campeonato.id));
   }, []);
-
-  const campeonato = useSelector(selectCampeonatoUpdate);
-  console.log("undefined", campeonato);
 
   const [campeonatoUpdated, setCampeonatoUpdated] = useState({
     id: campeonato.id,
@@ -33,8 +30,6 @@ const EditarCampeonato = () => {
 
   const onDeleteCampeonatoClick = () => {
     dispatch(handleDeleteCampeonato(campeonato.id));
-    dispatch(fetchCampeonatos());
-    navigate("/home");
   };
 
   const getCampenatoData = (e) => {
@@ -45,7 +40,8 @@ const EditarCampeonato = () => {
     e.preventDefault();
     dispatch(handleUpdateCampeonato(campeonatoUpdated));
     setCampeonatoUpdated({ ...campeonatoUpdated, name: " " });
-    navigate("/home");
+    dispatch(fetchCampeonatos());
+    navigate("/campeonato");
   };
 
   return (

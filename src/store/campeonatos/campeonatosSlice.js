@@ -4,7 +4,7 @@ import { endpointRoutes } from "../../utils/endpoitsRoutes";
 
 const initialState = {
   campeonatosArray: [],
-  idCampeonato: null,
+  campeonatoID: null,
   campeonatoUpdate: { id: null, name: "" },
   error: null,
   loading: false,
@@ -18,7 +18,7 @@ export const fetchCampeonatos = createAsyncThunk(
     try {
       const response = await fazRequest(endpointRoutes.tournament, "GET");
       const data = await response.json();
-      return data;
+      return data.entities;
     } catch (error) {
       return error;
     }
@@ -30,7 +30,7 @@ export const handleDeleteCampeonato = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       await fazRequest(
-        util.format(endpointRoutes.tournamentDelete, id),
+        util.format(endpointRoutes.tournamentByID, id),
         "DELETE"
       );
       return id;
@@ -61,11 +61,10 @@ export const handleCreateCampeonato = createAsyncThunk(
 export const handleUpdateCampeonato = createAsyncThunk(
   "campeonatos/handleUpdateCampeonato",
   async (campeoantoUpdated) => {
-    console.log("Testando oooooooooo", campeoantoUpdated);
     try {
       const body = JSON.stringify({ name: campeoantoUpdated.name });
       await fazRequest(
-        util.format(endpointRoutes.tournamentUpdate, campeoantoUpdated.id),
+        util.format(endpointRoutes.tournamentByID, campeoantoUpdated.id),
         "PATCH",
         body
       );
@@ -81,19 +80,20 @@ const campeonatosSlice = createSlice({
   initialState,
   reducers: {
     saveIDCampeonato: (state, action) => {
-      state.idCampeonato = action.payload;
+      state.campeonatoID = action.payload;
     },
     saveUpdateCampeonato: (state, action) => {
       const singleCampeonato = state.campeonatosArray.filter(
         (campeonato) => campeonato.id === action.payload
       );
+
       state.campeonatoUpdate = singleCampeonato[0];
     },
   },
   extraReducers(builder) {
     builder
 
-      //Delete tournaments
+      //Delete tournament
       .addCase(handleDeleteCampeonato.pending, (state, action) => {
         state.loading = true;
       })
@@ -112,9 +112,10 @@ const campeonatosSlice = createSlice({
 
       //Show all tournaments
       .addCase(fetchCampeonatos.pending, (state, action) => {
-        state.loading = false;
+        state.loading = true;
       })
       .addCase(fetchCampeonatos.fulfilled, (state, action) => {
+        state.loading = false;
         state.campeonatosArray = action.payload;
       })
       .addCase(fetchCampeonatos.rejected, (state, action) => {

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { FaCirclePlus, FaPenToSquare, FaTrashCan } from "react-icons/fa6";
@@ -12,6 +12,7 @@ import {
   selectAllCampeonatos,
   selectCampeonatosLoading,
 } from "../../store/campeonatos/campeonatosSlice";
+import { async } from "q";
 
 const Campeonatos = () => {
   const campeonatosArray = useSelector(selectAllCampeonatos);
@@ -42,7 +43,6 @@ const Campeonatos = () => {
               <a>{name}</a>{" "}
               <FaPenToSquare
                 onClick={() => {
-                  dispatch(saveIDCampeonato(id));
                   dispatch(saveUpdateCampeonato(id));
                   navigate("/editarCampeonato");
                 }}

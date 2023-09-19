@@ -23,7 +23,7 @@ const Navigation = () => {
   return (
     <Fragment>
       <section>
-        <button onClick={() => navigate("/home")}>Home</button>
+        <button onClick={() => navigate("/campeonato")}>Home</button>
 
         <p>Olá {usernameFormatado}!</p>
         <p>Você possui X PedroPoints!</p>
