@@ -26,7 +26,7 @@ export const fetchCampeonatos = createAsyncThunk(
 );
 
 export const handleDeleteCampeonato = createAsyncThunk(
-  "campeoantos/handleDeleteCampeonato",
+  "campeonatos/handleDeleteCampeonato",
   async (id, { rejectWithValue }) => {
     try {
       await fazRequest(
@@ -46,11 +46,13 @@ export const handleCreateCampeonato = createAsyncThunk(
   async (tempCampeonatoName, { rejectWithValue }) => {
     try {
       const body = JSON.stringify(tempCampeonatoName);
-      return await fazRequest(
+       const response = await fazRequest(
         util.format(endpointRoutes.tournament),
         "POST",
         body
       );
+      const data = await response.json();
+      return data.entities;
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -92,7 +94,6 @@ const campeonatosSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-
       //Delete tournament
       .addCase(handleDeleteCampeonato.pending, (state, action) => {
         state.loading = true;
@@ -129,7 +130,6 @@ const campeonatosSlice = createSlice({
       })
       .addCase(handleCreateCampeonato.fulfilled, (state, action) => {
         state.loading = false;
-        state.campeonatosArray.push(action.payload);
       })
       .addCase(handleCreateCampeonato.rejected, (state, action) => {
         state.loading = false;

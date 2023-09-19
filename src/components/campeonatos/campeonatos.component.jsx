@@ -12,7 +12,6 @@ import {
   selectAllCampeonatos,
   selectCampeonatosLoading,
 } from "../../store/campeonatos/campeonatosSlice";
-import { async } from "q";
 
 const Campeonatos = () => {
   const campeonatosArray = useSelector(selectAllCampeonatos);

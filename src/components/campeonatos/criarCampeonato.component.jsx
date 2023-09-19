@@ -13,9 +13,9 @@ const CriarCampeonato = () => {
     setTempCampeonatoName(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(handleCreateCampeonato({ name: tempCampeonatoName }));
+    await dispatch(handleCreateCampeonato({ name: tempCampeonatoName }));
     setTempCampeonatoName(" ");
     navigate("/campeonato");
   };
