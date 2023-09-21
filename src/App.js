@@ -18,6 +18,7 @@ import Rodada from "./components/rodadas/rodadas.component";
 import { Routes, Route } from "react-router-dom";
 import EditarRodada from "./components/rodadas/editarRodada";
 import CriarRodada from "./components/rodadas/criarRodada";
+import BoasVindas from "./components/boasVindas/campeonatos.component";
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
       <Route index path="/signin" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/" element={<Navigation />}>
+        <Route path="/" element={<BoasVindas />} />
         <Route path="/campeonato" element={<Campeonatos />} />
         <Route path="/editarCampeonato" element={<EditarCampeonato />} />
         <Route path="/criarCampeonato" element={<CriarCampeonato />} />

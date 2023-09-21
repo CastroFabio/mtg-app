@@ -59,7 +59,7 @@ const Login = () => {
           </p>
           {currentUserError ? <p>{currentUserError}</p> : null}
 
-          {currentUser ? <Navigate to="/campeonato" replace={true} /> : null}
+          {currentUser ? <Navigate to="/" replace={true} /> : null}
         </form>
       </div>
     </div>

@@ -33,32 +33,34 @@ const Navigation = () => {
   return (
     <Fragment>
       <header>
-        <span class="inner-text"> Header </span>
+        <span class="inner-text">GEEK PLACE PLAY'N'PUB </span>
       </header>
       <div class="main-container">
         <aside class="sidebar">
-          <span class="inner-text"> Side Area </span>
+          <ul>
+            <li>
+              <a href="/campeonato">Campeonatos</a>
+            </li>
+            <li>
+              <a href="#">Usuários</a>
+            </li>
+            <li>
+              <a href="#">Pontos</a>
+            </li>
+          </ul>
         </aside>
 
         <main class="content">
           <div class="component-url">Liga das maquinas > Dia 25 > Rodada 2</div>
           <div class="components">
             <Outlet />
-            <span class="inner2-text">
-              Content Area Content Area Content Area Content Area Content Area
-              Content Area Content Area Content Area Content Area Content Area
-              Content Area Content Area Content Area Content Area Content Area
-              Content Area Content Area Content Area Content Area Content Area
-              Content Area Content Area Content Area Content Area Content Area
-              Content Area
-            </span>
           </div>
         </main>
       </div>
       <footer>
         <div class="container-footer">
           <span class="copyright">
-            GEEK PLACE PLAY'N'PUB - Rua Chico Pinto, 417 - Centro - Araras - SP
+            Rua Chico Pinto, 417 - Centro - Araras - SP
           </span>
           <ul>
             <li>
