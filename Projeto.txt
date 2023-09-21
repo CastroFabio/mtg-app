@@ -58,13 +58,8 @@ Features:
         3.2. Série é o dia dentro de um campeonato que os players vão jogar
         um contra o outro.
         3.3. Rodada é o player vs player naquele dia.
-    4. 
-    5. 
+    4. Filtrar Ligas Ativas dentro de um Campeonato.
+    5. Add banners
 
 Pesquisar migrations
 Pesquisar nestJS
-
-
-
-
-CONFIRMAÇÃO DE AÇÃO

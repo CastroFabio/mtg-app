@@ -15,6 +15,7 @@ import { FaCirclePlus, FaPenToSquare, FaTrashCan } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { fetchRodadas } from "../../store/campeonatos/rodadasSlice";
+import { fetchAllUsers } from "../../store/user/userSlice";
 
 const Series = () => {
   const seriesArray = useSelector(selectAllSeries);
@@ -48,7 +49,8 @@ const Series = () => {
             <div key={id}>
               <a
                 style={{ cursor: "pointer" }}
-                onClick={() => {
+                onClick={async () => {
+                  console.log("1");
                   dispatch(
                     saveSerieToRodada({
                       campeonatoID: campeonato.id,
@@ -57,7 +59,9 @@ const Series = () => {
                       nameSerie: name,
                     })
                   );
-                  dispatch(fetchRodadas({ campeonatoID, serieID }));
+                  console.log("2");
+                  await dispatch(fetchRodadas({ campeonatoID, serieID }));
+                  await dispatch(fetchAllUsers({ campeonatoID, serieID }));
 
                   navigate("/rodada");
                 }}

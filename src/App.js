@@ -16,6 +16,8 @@ import CriarSerie from "./components/series/criarSerie.component";
 import Rodada from "./components/rodadas/rodadas.component";
 
 import { Routes, Route } from "react-router-dom";
+import EditarRodada from "./components/rodadas/editarRodada";
+import CriarRodada from "./components/rodadas/criarRodada";
 
 const App = () => {
   return (
@@ -30,6 +32,8 @@ const App = () => {
         <Route path="/editarSerie" element={<EditarSerie />} />
         <Route path="/criarSerie" element={<CriarSerie />} />
         <Route path="/rodada" element={<Rodada />} />
+        <Route path="/editarRodada" element={<EditarRodada />} />
+        <Route path="/criarRodada" element={<CriarRodada />} />
       </Route>
     </Routes>
   );

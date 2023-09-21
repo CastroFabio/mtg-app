@@ -15,6 +15,7 @@ var util = require("util");
 export const fetchRodadas = createAsyncThunk(
   "rodadas/fetchRodadas",
   async (rodada) => {
+    console.log("3");
     try {
       const response = await fazRequest(
         util.format(endpointRoutes.round, rodada.campeonatoID, rodada.serieID),
@@ -31,7 +32,11 @@ export const fetchRodadas = createAsyncThunk(
 const rodadasSlice = createSlice({
   name: "rodadas",
   initialState,
-  reducers: {},
+  reducers: {
+    saveUpdatePlayer: (state, action) => {
+      state.rodadaUpdate = action.payload;
+    },
+  },
   extraReducers(builder) {
     builder
 
@@ -49,7 +54,8 @@ const rodadasSlice = createSlice({
       });
   },
 });
+export const { saveUpdatePlayer } = rodadasSlice.actions;
 
-export const selectAllRodadas = (state) => state.series.rodadasArray;
+export const selectAllRodadas = (state) => state.rodadas.rodadasArray;
 
 export default rodadasSlice.reducer;
