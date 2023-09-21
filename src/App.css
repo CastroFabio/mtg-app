@@ -1,84 +1,91 @@
-* {
+
+:root {
+  --height-footer: 100px;
+  --height-header: 100px;
+}
+
+body {
   margin: 0;
   padding: 0;
+  min-height: 100vh;
 }
-body {
-  background: #fff;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
-main h1 {
-  text-align: center;
-  margin-top: 40px;
-  letter-spacing: 5px;
-  font-size: 30px;
-}
-.tabs_container {
+
+.main-container {
   display: flex;
-  justify-content: center;
+  min-height: calc(100vh - (var(--height-header) + var(--height-footer)));
 }
-#flex-item-1 {
-  border-radius: 5px 0 0 5px;
-}
-#flex-item-2 {
-  border-radius: 0 5px 5px 0;
-}
-.page_tabs {
+
+header {
+  height: var(--height-header);
+  background-color: lightblue;
   display: flex;
-  justify-content: center;
 }
-.btn {
-  width: 250px;
-  height: 70px;
-  border: none;
-  margin: 20px 0;
-  background: #ff5c00;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
-}
-.active {
-  background: #d9d9d9;
-  box-shadow: 2px 2px 10px #000;
-  z-index: 1;
-}
-.tab {
-  width: 500px;
-  height: 370px;
-  background: #d9d9d9;
-  /* border: 1px solid #000; */
-}
-#login_div {
-  border-radius: 5px;
-  position: relative;
-  background: #d9d9d9;
-  z-index: 1;
-}
-#signup_div {
-  border-radius: 5px;
-  position: absolute;
-  box-shadow: 2px 2px 10px #000;
-}
-.tab {
+
+footer {
+  height: var(--height-footer);
+  background-color: lightblue;
   display: flex;
-  justify-content: center;
+}
+
+.container-footer {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
+  margin: auto;
 }
-.inputs {
-  width: 300px;
-  height: 20px;
-  border: none;
-  margin: 4px 0 11px 0;
-  padding: 5px 15px;
-  font-size: 19px;
+
+.container-footer p{
+  display: flex;
 }
-.tabs_btn {
-  width: 150px;
-  height: 40px;
-  margin-top: 20px;
-  box-shadow: 1px 1px 3px #000;
-  cursor: pointer;
-  font-size: 15px;
+
+footer ul {
+  display: flex;
+  list-style-type: none;
+  column-gap: 1rem;
 }
-.label {
-  font-size: 18px;
+
+.sidebar {
+  min-width: 300px;
+  background-color: lightgrey;
+  display: flex;
 }
+
+.content {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+}
+
+.inner-text {
+  font-weight: 700;
+  font-size: 24px;
+  margin: auto;
+}
+
+footer a {
+  color: rgb(0, 0, 0);
+  font-size: 2rem;
+}
+
+footer a:hover {
+  color: white;
+}
+
+
+
+
+
+
+/* 
+
+
+@media only screen and (max-width: 992px)
+{
+  .main-container {
+     flex-direction: column-reverse;
+  }
+
+  .sidebar{
+      height: 150;
+  }
+} */
