@@ -32,7 +32,7 @@ const EditarCampeonato = () => {
     dispatch(handleDeleteCampeonato(campeonato.id));
   };
 
-  const getCampenatoData = (e) => {
+  const getCampeonatoData = (e) => {
     setCampeonatoUpdated({ ...campeonatoUpdated, name: e.target.value });
   };
 
@@ -56,7 +56,7 @@ const EditarCampeonato = () => {
           type="text"
           name="name"
           value={campeonatoUpdated.name}
-          onChange={getCampenatoData}
+          onChange={getCampeonatoData}
         />
       </form>
     </div>

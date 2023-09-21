@@ -6,6 +6,7 @@ const initialState = {
   campeonatosArray: [],
   campeonatoID: null,
   campeonatoUpdate: { id: null, name: "" },
+  campeonatoToSeries: { id: null, name: "" },
   error: null,
   loading: false,
 };
@@ -46,7 +47,7 @@ export const handleCreateCampeonato = createAsyncThunk(
   async (tempCampeonatoName, { rejectWithValue }) => {
     try {
       const body = JSON.stringify(tempCampeonatoName);
-       const response = await fazRequest(
+      const response = await fazRequest(
         util.format(endpointRoutes.tournament),
         "POST",
         body
@@ -90,6 +91,16 @@ const campeonatosSlice = createSlice({
       );
 
       state.campeonatoUpdate = singleCampeonato[0];
+    },
+    firstTimeRenderCampeonato: (state, action) => {
+      state.campeonatosArray = initialState;
+    },
+    saveCampenatoToSeries: (state, action) => {
+      const singleCampeonato = state.campeonatosArray.filter(
+        (campeonato) => campeonato.id === action.payload
+      );
+
+      state.campeonatoToSeries = singleCampeonato[0];
     },
   },
   extraReducers(builder) {
@@ -155,10 +166,14 @@ const campeonatosSlice = createSlice({
   },
 });
 
-export const { saveIDCampeonato, saveUpdateCampeonato } =
-  campeonatosSlice.actions;
+export const {
+  saveIDCampeonato,
+  saveUpdateCampeonato,
+  firstTimeRenderCampeonato,
+  saveCampenatoToSeries,
+} = campeonatosSlice.actions;
 
-export const selectIDCampeonato = (state) => state.campeonatos.idCampeonato;
+export const selectIDCampeonato = (state) => state.campeonatos.campeonatoID;
 
 export const selectAllCampeonatos = (state) =>
   state.campeonatos.campeonatosArray;
@@ -167,5 +182,8 @@ export const selectCampeonatosLoading = (state) => state.campeonatos.loading;
 
 export const selectCampeonatoUpdate = (state) =>
   state.campeonatos.campeonatoUpdate;
+
+export const selectCampeonatoToSeries = (state) =>
+  state.campeonatos.campeonatoToSeries;
 
 export default campeonatosSlice.reducer;

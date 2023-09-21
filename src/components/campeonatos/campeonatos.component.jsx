@@ -6,7 +6,9 @@ import { FaCirclePlus, FaPenToSquare, FaTrashCan } from "react-icons/fa6";
 
 import {
   fetchCampeonatos,
+  firstTimeRenderCampeonato,
   handleDeleteCampeonato,
+  saveCampenatoToSeries,
   saveIDCampeonato,
   saveUpdateCampeonato,
   selectAllCampeonatos,
@@ -21,6 +23,7 @@ const Campeonatos = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    dispatch(firstTimeRenderCampeonato());
     dispatch(fetchCampeonatos());
   }, []);
 
@@ -39,7 +42,15 @@ const Campeonatos = () => {
         campeonatosArray.map(({ id, name }) => {
           return (
             <div key={id}>
-              <a>{name}</a>{" "}
+              <a
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  dispatch(saveCampenatoToSeries(id));
+                  navigate("/serie");
+                }}
+              >
+                {name}
+              </a>
               <FaPenToSquare
                 onClick={() => {
                   dispatch(saveUpdateCampeonato(id));

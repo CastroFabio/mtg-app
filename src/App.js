@@ -10,6 +10,10 @@ import EditarCampeonato from "./components/campeonatos/editarCampeonato.componen
 import CriarCampeonato from "./components/campeonatos/criarCampeonato.component";
 
 import Series from "./components/series/series.component";
+import EditarSerie from "./components/series/editarSerie.component";
+import CriarSerie from "./components/series/criarSerie.component";
+
+import Rodada from "./components/rodadas/rodadas.component";
 
 import { Routes, Route } from "react-router-dom";
 
@@ -23,6 +27,9 @@ const App = () => {
         <Route path="/editarCampeonato" element={<EditarCampeonato />} />
         <Route path="/criarCampeonato" element={<CriarCampeonato />} />
         <Route path="/serie" element={<Series />} />
+        <Route path="/editarSerie" element={<EditarSerie />} />
+        <Route path="/criarSerie" element={<CriarSerie />} />
+        <Route path="/rodada" element={<Rodada />} />
       </Route>
     </Routes>
   );

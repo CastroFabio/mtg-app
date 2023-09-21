@@ -14,7 +14,6 @@ const Navigation = () => {
   const currentUserIsLoggedIn = useSelector(selectCurrentUserIsLoggedIn);
   const currentUserPoints = useSelector(selectCurrentUserPoints);
 
-
   const usernameFormatado = currentUser
     ? currentUser.username.charAt(0).toUpperCase() +
       currentUser.username.slice(1)
@@ -29,7 +28,7 @@ const Navigation = () => {
         <button onClick={() => navigate("/campeonato")}>Home</button>
 
         <p>Olá {usernameFormatado}!</p>
-        <p>Você possui {currentUserPoints} PedroPoints!</p>
+        <p>Você possui {currentUserPoints || 0} PedroPoints!</p>
       </section>
       <section style={{ textAlign: "right" }}>
         {currentUserIsLoggedIn ? (

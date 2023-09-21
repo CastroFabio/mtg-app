@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { handleCreateCampeonato } from "../../store/campeonatos/campeonatosSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
+import { handleCreateCampeonato } from "../../store/campeonatos/campeonatosSlice";
 
 const CriarCampeonato = () => {
   const [tempCampeonatoName, setTempCampeonatoName] = useState("");

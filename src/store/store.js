@@ -3,11 +3,12 @@ import { persistReducer, persistStore } from "redux-persist";
 import { combineReducers } from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
 import storage from "redux-persist/lib/storage";
+import logger from "redux-logger";
 
 import campeonatosReducer from "./campeonatos/campeonatosSlice";
 import seriesReducer from "./campeonatos/seriesSlice";
 import userReducer from "./user/userSlice";
-import logger from "redux-logger";
+import rodadasReducer from "./campeonatos/rodadasSlice";
 
 const persistConfig = {
   key: "root",
@@ -17,6 +18,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   campeonatos: campeonatosReducer,
   series: seriesReducer,
+  rodadas: rodadasReducer,
   user: userReducer,
 });
 

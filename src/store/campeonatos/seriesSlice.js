@@ -6,30 +6,45 @@ const initialState = {
   seriesArray: [],
   serieID: null,
   serieUpdate: { id: null, name: "" },
+  serieToRodada: {
+    campeonatoID: null,
+    nameCampeonato: "",
+    serieID: null,
+    nameSerie: "",
+  },
   error: null,
   loading: false,
 };
 
 var util = require("util");
 
-export const fetchSeries = createAsyncThunk("series/fetchSeries", async () => {
-  try {
-    const response = await fazRequest(endpointRoutes.serie, "GET");
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    return error;
+export const fetchSeries = createAsyncThunk(
+  "series/fetchSeries",
+  async (campeonatoID) => {
+    try {
+      const response = await fazRequest(
+        util.format(endpointRoutes.serie, campeonatoID),
+        "GET"
+      );
+      const data = await response.json();
+      return data.entities;
+    } catch (error) {
+      return error;
+    }
   }
-});
+);
 
 export const handleDeleteSerie = createAsyncThunk(
   "series/handleDeleteSerie",
-  async (id, { rejectWithValue }) => {
+  async ({ campeonatoID, id }) => {
     try {
-      await fazRequest(util.format(endpointRoutes.serieByID, id), "DELETE");
+      await fazRequest(
+        util.format(endpointRoutes.serieByID, campeonatoID, id),
+        "DELETE"
+      );
       return id;
     } catch (error) {
-      return rejectWithValue(error);
+      return error;
     }
   }
 );
@@ -37,10 +52,27 @@ export const handleDeleteSerie = createAsyncThunk(
 //create action
 export const handleCreateSerie = createAsyncThunk(
   "series/handleCreateSerie",
-  async (tempSerieName, { rejectWithValue }) => {
+  async (newSerie, { rejectWithValue }) => {
     try {
-      const body = JSON.stringify(tempSerieName);
-      return await fazRequest(util.format(endpointRoutes.serie), "POST", body);
+      const date = new Date();
+
+      const day = date.getDate();
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear();
+
+      const currentDate = `${year}-${month}-${day}`;
+
+      const body = JSON.stringify({
+        name: newSerie.tempSerieName,
+        date: currentDate,
+      });
+      const response = await fazRequest(
+        util.format(endpointRoutes.serie, newSerie.campeonatoID),
+        "POST",
+        body
+      );
+      const data = await response.json();
+      return data.entities;
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -52,9 +84,24 @@ export const handleUpdateSerie = createAsyncThunk(
   "Series/handleUpdateSerie",
   async (serieUpdate) => {
     try {
-      const body = JSON.stringify({ name: serieUpdate.name });
+      const date = new Date();
+
+      const day = date.getDate();
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear();
+
+      const currentDate = `${year}-${month}-${day}`;
+
+      const body = JSON.stringify({
+        name: serieUpdate.name,
+        date: currentDate,
+      });
       await fazRequest(
-        util.format(endpointRoutes.serieByID, serieUpdate.id),
+        util.format(
+          endpointRoutes.serieByID,
+          serieUpdate.campeonatoID,
+          serieUpdate.id
+        ),
         "PATCH",
         body
       );
@@ -73,11 +120,17 @@ const seriesSlice = createSlice({
       state.serieID = action.payload;
     },
     saveUpdateSerie: (state, action) => {
-      const singleSerie = state.seriesArray.filter(
-        (serie) => serie.id === action.payload
-      );
+      const singleSerie = state.seriesArray.filter((serie) => {
+        return serie.id === action.payload;
+      });
 
       state.serieUpdate = singleSerie[0];
+    },
+    firstTimeRenderSerie: (state, action) => {
+      state.seriesArray = initialState;
+    },
+    saveSerieToRodada: (state, action) => {
+      state.serieToRodada = action.payload;
     },
   },
   extraReducers(builder) {
@@ -145,14 +198,21 @@ const seriesSlice = createSlice({
   },
 });
 
-export const { saveIDSerie, saveUpdateSerie } = seriesSlice.actions;
+export const {
+  saveIDSerie,
+  saveUpdateSerie,
+  firstTimeRenderSerie,
+  saveSerieToRodada,
+} = seriesSlice.actions;
 
-export const selectIDSerie = (state) => state.series.idserie;
+export const selectIDSerie = (state) => state.series.serieID;
 
 export const selectAllSeries = (state) => state.series.seriesArray;
 
 export const selectSeriesLoading = (state) => state.series.loading;
 
 export const selectSerieUpdate = (state) => state.series.serieUpdate;
+
+export const selectSerieToRodada = (state) => state.series.serieToRodada;
 
 export default seriesSlice.reducer;

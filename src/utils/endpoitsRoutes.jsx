@@ -7,5 +7,6 @@ export const endpointRoutes = {
   roundByID: "/tournament/%s/tournament-serie/%s/tournament-serie-user/%s",
   login: "/auth/login",
   signUp: "/auth/signup",
+  user: "/user",
   userBalance: "/user-point/balance/%s",
 };
