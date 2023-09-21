@@ -1,6 +1,5 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
-  fetchSeries,
   handleDeleteSerie,
   saveSerieToRodada,
   saveUpdateSerie,
@@ -9,29 +8,33 @@ import {
   selectSeriesLoading,
 } from "../../store/campeonatos/seriesSlice";
 
-import { selectCampeonatoToSeries } from "../../store/campeonatos/campeonatosSlice";
+import { getSelectedTournament } from "../../store/campeonatos/campeonatosSlice";
 
 import { FaCirclePlus, FaPenToSquare, FaTrashCan } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { fetchRodadas } from "../../store/campeonatos/rodadasSlice";
 import { fetchAllUsers } from "../../store/user/userSlice";
+import { fetchSeries } from "../../utils/seriesEndpoints";
 
 const Series = () => {
-  const seriesArray = useSelector(selectAllSeries);
-  const campeonato = useSelector(selectCampeonatoToSeries);
-  const isLoading = useSelector(selectSeriesLoading);
-  const { campeonatoID, nameCampeonato, serieID, nameSerie } =
-    useSelector(selectSerieToRodada);
+  const campeonato = useSelector(getSelectedTournament);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [getSeries, setSeries] = useState(null);
+
   useEffect(() => {
-    dispatch(fetchSeries(campeonato.id));
+    const getData = async () => {
+      const data = await fetchSeries(campeonato.id);
+      setSeries(data);
+    };
+
+    getData();
   }, []);
 
-  if (isLoading) {
+  if (getSeries == null) {
     return <h2>Loading...</h2>;
   }
 
@@ -43,8 +46,8 @@ const Series = () => {
       </button>
 
       <h1>{campeonato.name} - Séries</h1>
-      {seriesArray &&
-        seriesArray.map(({ id, name }) => {
+      {getSeries &&
+        getSeries.map(({ id, name }) => {
           return (
             <div key={id}>
               <a
@@ -59,9 +62,9 @@ const Series = () => {
                       nameSerie: name,
                     })
                   );
-                  console.log("2");
-                  await dispatch(fetchRodadas({ campeonatoID, serieID }));
-                  await dispatch(fetchAllUsers({ campeonatoID, serieID }));
+
+                  // await dispatch(fetchRodadas({ campeonatoID, serieID }));
+                  // await dispatch(fetchAllUsers({ campeonatoID, serieID }));
 
                   navigate("/rodada");
                 }}

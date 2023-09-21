@@ -18,7 +18,7 @@ import Rodada from "./components/rodadas/rodadas.component";
 import { Routes, Route } from "react-router-dom";
 import EditarRodada from "./components/rodadas/editarRodada";
 import CriarRodada from "./components/rodadas/criarRodada";
-import BoasVindas from "./components/boasVindas/campeonatos.component";
+import BoasVindas from "./components/boasVindas/boasVindas.component";
 
 const App = () => {
   return (

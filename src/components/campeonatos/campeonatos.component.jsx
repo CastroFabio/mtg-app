@@ -1,33 +1,39 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { FaCirclePlus, FaPenToSquare, FaTrashCan } from "react-icons/fa6";
 
+import { saveSelectedTournament } from "../../store/campeonatos/campeonatosSlice";
 import {
   fetchCampeonatos,
-  firstTimeRenderCampeonato,
-  handleDeleteCampeonato,
-  saveCampenatoToSeries,
-  saveIDCampeonato,
-  saveUpdateCampeonato,
-  selectAllCampeonatos,
-  selectCampeonatosLoading,
-} from "../../store/campeonatos/campeonatosSlice";
+  deleteCampeonatos,
+} from "../../utils/campeonatosEndpoints";
 
 const Campeonatos = () => {
-  const campeonatosArray = useSelector(selectAllCampeonatos);
-  const isLoading = useSelector(selectCampeonatosLoading);
+  const getSelectedTournament = (id) => getTournaments.find((x) => x.id == id);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    dispatch(firstTimeRenderCampeonato());
-    dispatch(fetchCampeonatos());
-  }, []);
+  const [getTournaments, setTournaments] = useState(null);
+  const [getDeleted, deleted] = useState(null);
 
-  if (isLoading) {
+  const handleDelete = async (id) => {
+    await deleteCampeonatos(id);
+    deleted(id);
+  };
+
+  useEffect(() => {
+    const getData = async () => {
+      const data = await fetchCampeonatos();
+      setTournaments(data);
+    };
+
+    getData();
+  }, [getDeleted]);
+
+  if (getTournaments == null) {
     return <h2>Loading...</h2>;
   }
 
@@ -38,28 +44,32 @@ const Campeonatos = () => {
         Criar Campeonato
       </button>
       <h1>Campeonatos</h1>
-      {campeonatosArray &&
-        campeonatosArray.map(({ id, name }) => {
+      {getTournaments &&
+        getTournaments.map(({ id, name }) => {
           return (
             <div key={id}>
               <a
                 style={{ cursor: "pointer" }}
-                onClick={() => {
-                  dispatch(saveCampenatoToSeries(id));
+                onClick={async () => {
+                  await dispatch(
+                    saveSelectedTournament(getSelectedTournament(id))
+                  );
                   navigate("/serie");
                 }}
               >
                 {name}
               </a>
               <FaPenToSquare
-                onClick={() => {
-                  dispatch(saveUpdateCampeonato(id));
+                onClick={async () => {
+                  await dispatch(
+                    saveSelectedTournament(getSelectedTournament(id))
+                  );
                   navigate("/editarCampeonato");
                 }}
               />
               <FaTrashCan
                 onClick={() => {
-                  dispatch(handleDeleteCampeonato(id));
+                  handleDelete(id);
                 }}
               />
             </div>

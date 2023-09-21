@@ -1,23 +1,15 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
-import { handleCreateCampeonato } from "../../store/campeonatos/campeonatosSlice";
+import { createCampeonatos } from "../../utils/campeonatosEndpoints";
 
 const CriarCampeonato = () => {
-  const [tempCampeonatoName, setTempCampeonatoName] = useState("");
+  const [getCampeonatoName, setCampeonatoName] = useState("");
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const getCampenatoData = (e) => {
-    setTempCampeonatoName(e.target.value);
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await dispatch(handleCreateCampeonato({ name: tempCampeonatoName }));
-    setTempCampeonatoName(" ");
+    await createCampeonatos(getCampeonatoName);
     navigate("/campeonato");
   };
   return (
@@ -26,8 +18,8 @@ const CriarCampeonato = () => {
       <input
         type="text"
         name="name"
-        value={tempCampeonatoName}
-        onChange={getCampenatoData}
+        value={getCampeonatoName}
+        onChange={(e) => setCampeonatoName(e.target.value)}
       />
     </form>
   );
