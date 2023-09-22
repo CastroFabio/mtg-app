@@ -50,24 +50,26 @@ const CriarRodada = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>Criar nova Rodada</label>
-      <select value={getSelected} onChange={handleChange}>
-        {getUserOptions.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.text}
-          </option>
-        ))}
-      </select>
+    <section>
+      <form onSubmit={handleSubmit}>
+        <label>Criar nova Rodada</label>
+        <select value={getSelected} onChange={handleChange}>
+          {getUserOptions.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.text}
+            </option>
+          ))}
+        </select>
 
-      <input
-        type="text"
-        name="date"
-        value={getRodadaPoint}
-        onChange={(e) => setRodadaPoint(e.target.value)}
-      />
-      <button type="submit">Enviar</button>
-    </form>
+        <input
+          type="text"
+          name="date"
+          value={getRodadaPoint}
+          onChange={(e) => setRodadaPoint(e.target.value)}
+        />
+        <button type="submit">Enviar</button>
+      </form>
+    </section>
   );
 };
 

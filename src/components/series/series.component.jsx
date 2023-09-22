@@ -50,12 +50,7 @@ const Series = () => {
   }
 
   return (
-    <div>
-      <button onClick={() => navigate("/criarSerie")}>
-        <FaCirclePlus />
-        Criar Série
-      </button>
-
+    <section>
       <h1>{campeonato.name} - Séries</h1>
       {getSeries &&
         getSeries.map(({ id, name, date }) => {
@@ -94,7 +89,7 @@ const Series = () => {
             </div>
           );
         })}
-    </div>
+    </section>
   );
 };
 

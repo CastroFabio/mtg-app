@@ -53,11 +53,7 @@ const Rodadas = () => {
   }
 
   return (
-    <div>
-      <button onClick={() => navigate("/criarRodada")}>
-        <FaCirclePlus /> Criar Rodada
-      </button>
-
+    <section>
       <h1>
         {campeonato.name} - {serie.name} - Rodadas
       </h1>
@@ -76,7 +72,7 @@ const Rodadas = () => {
             </div>
           );
         })}
-    </div>
+    </section>
   );
 };
 

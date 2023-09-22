@@ -13,16 +13,18 @@ const CriarCampeonato = () => {
     navigate("/campeonato");
   };
   return (
-    <form onSubmit={handleSubmit}>
-      <label>Criar novo campeonato</label>
-      <input
-        type="text"
-        name="name"
-        value={getCampeonatoName}
-        onChange={(e) => setCampeonatoName(e.target.value)}
-      />
-      <button type="submit">Enviar</button>
-    </form>
+    <section>
+      <form onSubmit={handleSubmit}>
+        <label>Criar novo campeonato</label>
+        <input
+          type="text"
+          name="name"
+          value={getCampeonatoName}
+          onChange={(e) => setCampeonatoName(e.target.value)}
+        />
+        <button type="submit">Enviar</button>
+      </form>
+    </section>
   );
 };
 

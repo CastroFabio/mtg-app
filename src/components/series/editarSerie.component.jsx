@@ -27,7 +27,7 @@ const EditarSerie = () => {
   };
 
   return (
-    <div>
+    <section>
       <h1>{serie.name}</h1>
       <h2>{serie.id}</h2>
       <form onSubmit={handleSubmit}>
@@ -47,7 +47,7 @@ const EditarSerie = () => {
         />
         <button type="submit">Enviar</button>
       </form>
-    </div>
+    </section>
   );
 };
 

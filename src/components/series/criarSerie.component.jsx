@@ -21,22 +21,24 @@ const CriarSerie = () => {
     navigate("/serie");
   };
   return (
-    <form onSubmit={handleSubmit}>
-      <label>Criar nova serie</label>
-      <input
-        type="text"
-        name="name"
-        value={getSerieName}
-        onChange={(e) => setSerieName(e.target.value)}
-      />
-      <input
-        type="text"
-        name="date"
-        value={getSerieDate}
-        onChange={(e) => setSerieDate(e.target.value)}
-      />
-      <button type="submit">Enviar</button>
-    </form>
+    <section>
+      <form onSubmit={handleSubmit}>
+        <label>Criar nova serie</label>
+        <input
+          type="text"
+          name="name"
+          value={getSerieName}
+          onChange={(e) => setSerieName(e.target.value)}
+        />
+        <input
+          type="text"
+          name="date"
+          value={getSerieDate}
+          onChange={(e) => setSerieDate(e.target.value)}
+        />
+        <button type="submit">Enviar</button>
+      </form>
+    </section>
   );
 };
 

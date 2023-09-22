@@ -95,7 +95,13 @@ const Navigation = () => {
               <div> {url?.title ?? ""}</div>
               <div> {url?.url ?? ""} </div>
             </div>
-            <a onClick={() => navigate(urlToNavigate)}>Criar</a>
+            {urlToNavigate ? (
+              <a className="btn-white" onClick={() => navigate(urlToNavigate)}>
+                Criar
+              </a>
+            ) : (
+              ""
+            )}
           </div>
           <div className="content-components">
             <Outlet />

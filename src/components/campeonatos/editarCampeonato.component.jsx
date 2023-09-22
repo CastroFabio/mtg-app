@@ -20,7 +20,7 @@ const EditarCampeonato = () => {
   };
 
   return (
-    <div>
+    <section>
       <h2>{campeonato.id}</h2>
       <h1>{campeonato.name}</h1>
       <form onSubmit={handleSubmit}>
@@ -33,7 +33,7 @@ const EditarCampeonato = () => {
           onChange={(e) => setCampeonatoName(e.target.value)}
         />
       </form>
-    </div>
+    </section>
   );
 };
 
