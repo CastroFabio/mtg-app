@@ -19,7 +19,7 @@ export const fetchRodadas = async (campeonatoId, serieId) => {
 export const deleteRodadas = async (campeonatoId, serieId, id) => {
   try {
     await fazRequest(
-      util.format(endpointRoutes.roundByID, campeonatoId, serieId, id),
+      util.format(endpointRoutes.roundById, campeonatoId, serieId, id),
       "DELETE"
     );
     return id;

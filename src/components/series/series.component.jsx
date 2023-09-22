@@ -5,12 +5,14 @@ import { FaCirclePlus, FaPenToSquare, FaTrashCan } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { deleteSeries, fetchSeries } from "../../utils/seriesEndpoints";
+import { fetchPontuacaoCampeonatos } from "../../utils/campeonatosEndpoints";
 
 const Series = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [getSeries, setSeries] = useState(null);
+  const [getPontuacaoCampeonato, setPontuacaoCampeonato] = useState(null);
   const [getDeleted, deleted] = useState(null);
 
   const campeonato = useSelector(getSelectedTournament);
@@ -24,8 +26,13 @@ const Series = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const data = await fetchSeries(campeonato.id);
-      setSeries(data);
+      let [dataSeries, dataPontuacaoCampeonato] = await Promise.all([
+        fetchSeries(campeonato.id),
+        fetchPontuacaoCampeonatos(campeonato.id),
+      ]);
+
+      setSeries(dataSeries);
+      setPontuacaoCampeonato(dataPontuacaoCampeonato);
     };
 
     getData();
@@ -67,6 +74,16 @@ const Series = () => {
                   handleDelete(id);
                 }}
               />
+            </div>
+          );
+        })}
+
+      <h1>Pontuacao</h1>
+      {getPontuacaoCampeonato &&
+        getPontuacaoCampeonato.map(({ userId, userName, points }) => {
+          return (
+            <div key={userId}>
+              {userName} - {points}
             </div>
           );
         })}

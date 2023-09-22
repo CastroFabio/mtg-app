@@ -13,9 +13,22 @@ export const fetchCampeonatos = async () => {
   }
 };
 
+export const fetchPontuacaoCampeonatos = async (id) => {
+  try {
+    const response = await fazRequest(
+      util.format(endpointRoutes.tournamentPontuacao, id),
+      "GET"
+    );
+    const data = await response.json();
+    return data.entities;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const deleteCampeonatos = async (id) => {
   try {
-    await fazRequest(util.format(endpointRoutes.tournamentByID, id), "DELETE");
+    await fazRequest(util.format(endpointRoutes.tournamentById, id), "DELETE");
     return id;
   } catch (error) {
     return error;
@@ -41,7 +54,7 @@ export const updateCampeonatos = async (campeonato) => {
   try {
     const body = JSON.stringify({ name: campeonato.name });
     const response = await fazRequest(
-      util.format(endpointRoutes.tournamentByID, campeonato.id),
+      util.format(endpointRoutes.tournamentById, campeonato.id),
       "PATCH",
       body
     );

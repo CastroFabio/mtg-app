@@ -6,6 +6,7 @@ import { FaTrashCan } from "react-icons/fa6";
 import { getSelectedTournament } from "../../store/campeonatos/campeonatosSlice";
 import { deleteRodadas, fetchRodadas } from "../../utils/rodadasEndpoints";
 import { useState, useEffect } from "react";
+import { fetchUserById } from "../../utils/userEndpoints";
 
 const Rodadas = () => {
   const navigate = useNavigate();
@@ -23,8 +24,14 @@ const Rodadas = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const data = await fetchRodadas(campeonato.id, serie.id);
-      setRounds(data);
+      const dataRodadas = await fetchRodadas(campeonato.id, serie.id);
+      const dataRodadsWithUser = await Promise.all(
+        await dataRodadas.map(async (element) => {
+          const dataUser = await fetchUserById(element.userId);
+          return { ...element, user: dataUser[0] };
+        })
+      );
+      setRounds(dataRodadsWithUser);
     };
 
     getData();
@@ -42,11 +49,11 @@ const Rodadas = () => {
         {campeonato.name} - {serie.name} - Rodadas
       </h1>
       {getRounds &&
-        getRounds.map(({ id, userId, points }) => {
+        getRounds.map(({ id, points, user }) => {
           return (
             <div key={id}>
               <a style={{ cursor: "pointer" }}>
-                {userId} - {points}
+                {user.id} - {user.username} - {points}
               </a>
               <FaTrashCan
                 onClick={() => {

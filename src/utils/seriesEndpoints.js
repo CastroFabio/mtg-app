@@ -19,7 +19,7 @@ export const fetchSeries = async (campeonatoId) => {
 export const deleteSeries = async (campeonatoId, id) => {
   try {
     await fazRequest(
-      util.format(endpointRoutes.serieByID, campeonatoId, id),
+      util.format(endpointRoutes.serieById, campeonatoId, id),
       "DELETE"
     );
     return id;
@@ -53,7 +53,7 @@ export const updateSeries = async (campeonatoId, serie) => {
       date: serie.date,
     });
     const response = await fazRequest(
-      util.format(endpointRoutes.serieByID, campeonatoId, serie.id),
+      util.format(endpointRoutes.serieById, campeonatoId, serie.id),
       "PATCH",
       body
     );
