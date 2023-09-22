@@ -8,6 +8,7 @@ import {
   FaTwitch,
   FaTiktok,
   FaXTwitter,
+  FaRegCalendar,
 } from "react-icons/fa6";
 
 import {
@@ -15,11 +16,19 @@ import {
   selectCurrentUserIsLoggedIn,
   selectCurrentUserPoints,
 } from "../../store/user/userSlice";
+import {
+  getButtonAction,
+  getUrl,
+  setUrl,
+} from "../../store/campeonatos/navigationSlice";
 
 const Navigation = () => {
   const currentUser = useSelector(selectCurrentUser);
   const currentUserIsLoggedIn = useSelector(selectCurrentUserIsLoggedIn);
   const currentUserPoints = useSelector(selectCurrentUserPoints);
+
+  const url = useSelector(getUrl);
+  const urlToNavigate = useSelector(getButtonAction);
 
   const usernameFormatado = currentUser
     ? currentUser.username.charAt(0).toUpperCase() +
@@ -27,38 +36,75 @@ const Navigation = () => {
     : "Usuário";
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   return (
     <Fragment>
       <header>
-        <span class="inner-text">GEEK PLACE PLAY'N'PUB </span>
+        <span className="inner-text">GEEK PLACE PLAY'N'PUB </span>
       </header>
-      <div class="main-container">
-        <aside class="sidebar">
+      <div className="main-container">
+        <aside className="sidebar">
           <ul>
             <li>
-              <a href="/campeonato">Campeonatos</a>
+              <a
+                className="link-button"
+                onClick={() => {
+                  navigate("/campeonato");
+                }}
+              >
+                <div className="icon-menu">
+                  <FaRegCalendar />
+                </div>
+                <span>Campeonatos</span>
+              </a>
             </li>
             <li>
-              <a href="#">Usuários</a>
+              <a
+                className="link-button"
+                onClick={() => {
+                  navigate("/campeonato");
+                }}
+              >
+                <div className="icon-menu">
+                  <FaRegCalendar />
+                </div>
+                <span>Campeonatos</span>
+              </a>
             </li>
             <li>
-              <a href="#">Pontos</a>
+              <a
+                className="link-button"
+                onClick={() => {
+                  navigate("/campeonato");
+                }}
+              >
+                <div className="icon-menu">
+                  <FaRegCalendar />
+                </div>
+                <span>Campeonatos</span>
+              </a>
             </li>
           </ul>
         </aside>
 
-        <main class="content">
-          <div class="component-url">Liga das maquinas > Dia 25 > Rodada 2</div>
-          <div class="components">
+        <main className="content">
+          <div className="content-header-backgroud"></div>
+
+          <div className="content-header">
+            <div className="content-header-title">
+              <div> {url?.title ?? ""}</div>
+              <div> {url?.url ?? ""} </div>
+            </div>
+            <a onClick={() => navigate(urlToNavigate)}>Criar</a>
+          </div>
+          <div className="content-components">
             <Outlet />
           </div>
         </main>
       </div>
       <footer>
-        <div class="container-footer">
-          <span class="copyright">
+        <div className="container-footer">
+          <span className="copyright">
             Rua Chico Pinto, 417 - Centro - Araras - SP
           </span>
           <ul>

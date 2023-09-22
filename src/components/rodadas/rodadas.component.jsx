@@ -1,14 +1,19 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { getSelectedSerie } from "../../store/campeonatos/seriesSlice";
-import { FaTrashCan } from "react-icons/fa6";
+import { FaCirclePlus, FaTrashCan } from "react-icons/fa6";
 import { getSelectedTournament } from "../../store/campeonatos/campeonatosSlice";
 import { deleteRodadas, fetchRodadas } from "../../utils/rodadasEndpoints";
 import { useState, useEffect } from "react";
 import { fetchUserById } from "../../utils/userEndpoints";
+import {
+  setButtonAction,
+  setUrl,
+} from "../../store/campeonatos/navigationSlice";
 
 const Rodadas = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [getRounds, setRounds] = useState(null);
@@ -16,6 +21,12 @@ const Rodadas = () => {
 
   const campeonato = useSelector(getSelectedTournament);
   const serie = useSelector(getSelectedSerie);
+
+  dispatch(
+    setUrl({ title: "Rodadas", url: `${campeonato.name} > ${serie.name}` })
+  );
+
+  dispatch(setButtonAction("/criarRodada"));
 
   const handleDelete = async (id) => {
     await deleteRodadas(campeonato.id, serie.id, id);
@@ -43,7 +54,9 @@ const Rodadas = () => {
 
   return (
     <div>
-      <button onClick={() => navigate("/criarRodada")}>Criar Rodada</button>
+      <button onClick={() => navigate("/criarRodada")}>
+        <FaCirclePlus /> Criar Rodada
+      </button>
 
       <h1>
         {campeonato.name} - {serie.name} - Rodadas

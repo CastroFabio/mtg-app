@@ -9,6 +9,7 @@ import campeonatosReducer from "./campeonatos/campeonatosSlice";
 import seriesReducer from "./campeonatos/seriesSlice";
 import userReducer from "./user/userSlice";
 import rodadasReducer from "./campeonatos/rodadasSlice";
+import navigationReducer from "./campeonatos/navigationSlice";
 
 const persistConfig = {
   key: "root",
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   series: seriesReducer,
   rodadas: rodadasReducer,
   user: userReducer,
+  navigation: navigationReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

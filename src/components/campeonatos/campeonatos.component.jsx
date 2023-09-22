@@ -7,6 +7,10 @@ import {
   fetchCampeonatos,
   deleteCampeonatos,
 } from "../../utils/campeonatosEndpoints";
+import {
+  setButtonAction,
+  setUrl,
+} from "../../store/campeonatos/navigationSlice";
 
 const Campeonatos = () => {
   const dispatch = useDispatch();
@@ -16,6 +20,9 @@ const Campeonatos = () => {
   const [getDeleted, deleted] = useState(null);
 
   const getSelectedTournament = (id) => getTournaments.find((x) => x.id === id);
+
+  dispatch(setUrl({ title: "Campeonatos", url: "" }));
+  dispatch(setButtonAction("/criarCampeonato"));
 
   const handleDelete = async (id) => {
     await deleteCampeonatos(id);

@@ -6,6 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { deleteSeries, fetchSeries } from "../../utils/seriesEndpoints";
 import { fetchPontuacaoCampeonatos } from "../../utils/campeonatosEndpoints";
+import {
+  setButtonAction,
+  setUrl,
+} from "../../store/campeonatos/navigationSlice";
 
 const Series = () => {
   const dispatch = useDispatch();
@@ -16,6 +20,9 @@ const Series = () => {
   const [getDeleted, deleted] = useState(null);
 
   const campeonato = useSelector(getSelectedTournament);
+
+  dispatch(setUrl({ title: "Series", url: `${campeonato.name}` }));
+  dispatch(setButtonAction("/criarSerie"));
 
   const getSelectedSerie = (id) => getSeries.find((x) => x.id === id);
 
