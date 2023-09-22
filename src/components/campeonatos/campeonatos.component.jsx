@@ -11,6 +11,7 @@ import {
   setButtonAction,
   setUrl,
 } from "../../store/campeonatos/navigationSlice";
+import CampeonatosCard from "./campeonatosCard.component";
 
 const Campeonatos = () => {
   const dispatch = useDispatch();
@@ -21,21 +22,24 @@ const Campeonatos = () => {
 
   const getSelectedTournament = (id) => getTournaments.find((x) => x.id === id);
 
-  dispatch(setUrl({ title: "Campeonatos", url: "" }));
-  dispatch(setButtonAction("/criarCampeonato"));
-
   const handleDelete = async (id) => {
     await deleteCampeonatos(id);
     deleted(id);
   };
 
   useEffect(() => {
+    const dispatches = async () => {
+      await dispatch(setUrl({ title: "Campeonatos", url: "" }));
+      await dispatch(setButtonAction("/criarCampeonato"));
+    };
+
     const getData = async () => {
       const data = await fetchCampeonatos();
       setTournaments(data);
     };
 
     getData();
+    dispatches();
   }, [getDeleted]);
 
   if (getTournaments == null) {
@@ -43,12 +47,12 @@ const Campeonatos = () => {
   }
 
   return (
-    <section>
+    <section className="campeonatos">
       {getTournaments &&
-        getTournaments.map(({ id, name }) => {
+        getTournaments.map((campeonato) => {
           return (
-            <div key={id}>
-              <a
+            <div key={campeonato.id}>
+              {/* <a
                 style={{ cursor: "pointer" }}
                 onClick={async () => {
                   await dispatch(
@@ -71,7 +75,8 @@ const Campeonatos = () => {
                 onClick={() => {
                   handleDelete(id);
                 }}
-              />
+              /> */}
+              <CampeonatosCard {...campeonato} />
             </div>
           );
         })}

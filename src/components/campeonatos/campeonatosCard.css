@@ -1,0 +1,25 @@
+.campeonatos {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr ;
+    grid-template-rows: auto ;
+    overflow: auto;
+    border: 1px solid black; 
+    
+    max-height: 50vh;
+
+
+} 
+
+.campeonatos-card {
+    display: flex;
+    background-color: aqua;
+    min-height: 3rem;
+    border:2px solid black;
+    border-radius: 10px; 
+}
+
+
+/* campenatos-conteudo
+
+campenatos-botoes */

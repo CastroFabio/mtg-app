@@ -2,8 +2,8 @@
 :root {
   --height-footer: 100px;
   --height-header: 100px;
-  --content-header-title-height: 85px;
-  --content-header-background-height: 160px;
+  --content-header-title-height: 100px;
+  --content-header-background-height: 180px;
   --content-header-background-color: rgb(180, 201, 219);
   --background-color: white;
   --content-background-image: url("./assets/mago.png");
@@ -35,10 +35,9 @@ body {
 
 .main-container {
   display: flex;
-  min-height: calc(100vh - (var(--height-header) + var(--height-footer)));
+  height: calc(100vh - (var(--height-header) + var(--height-footer)));
   position: relative;
 }
-
 
 header {
   height: var(--height-header);
@@ -101,7 +100,6 @@ footer ul {
   flex-direction: column;
   background-color: var(--content-background-color);
   position: relative;
-  overflow:hidden;
   padding-left: 5rem;
 }
 
@@ -128,7 +126,6 @@ footer ul {
   background-color: var(--content-header-background-color);
   height: var(--content-header-background-height);
 }
-
 
 .content-header a {
   margin-left: auto;
