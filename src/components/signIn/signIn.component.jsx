@@ -6,7 +6,7 @@ import {
 } from "../../store/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 const defaultFormFields = {
   username: "",
@@ -20,7 +20,6 @@ const Login = () => {
   const currentUser = useSelector(selectCurrentUser);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();

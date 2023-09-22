@@ -1,29 +1,26 @@
 import { useEffect, useState } from "react";
-import {
-  handleDeleteSerie,
-  saveSerieToRodada,
-  saveUpdateSerie,
-  selectAllSeries,
-  selectSerieToRodada,
-  selectSeriesLoading,
-} from "../../store/campeonatos/seriesSlice";
-
+import { saveSelectedSerie } from "../../store/campeonatos/seriesSlice";
 import { getSelectedTournament } from "../../store/campeonatos/campeonatosSlice";
-
 import { FaCirclePlus, FaPenToSquare, FaTrashCan } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { fetchRodadas } from "../../store/campeonatos/rodadasSlice";
-import { fetchAllUsers } from "../../store/user/userSlice";
-import { fetchSeries } from "../../utils/seriesEndpoints";
+import { deleteSeries, fetchSeries } from "../../utils/seriesEndpoints";
 
 const Series = () => {
-  const campeonato = useSelector(getSelectedTournament);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [getSeries, setSeries] = useState(null);
+  const [getDeleted, deleted] = useState(null);
+
+  const campeonato = useSelector(getSelectedTournament);
+
+  const getSelectedSerie = (id) => getSeries.find((x) => x.id === id);
+
+  const handleDelete = async (id) => {
+    await deleteSeries(campeonato.id, id);
+    deleted(id);
+  };
 
   useEffect(() => {
     const getData = async () => {
@@ -32,7 +29,7 @@ const Series = () => {
     };
 
     getData();
-  }, []);
+  }, [getDeleted]);
 
   if (getSeries == null) {
     return <h2>Loading...</h2>;
@@ -47,40 +44,27 @@ const Series = () => {
 
       <h1>{campeonato.name} - Séries</h1>
       {getSeries &&
-        getSeries.map(({ id, name }) => {
+        getSeries.map(({ id, name, date }) => {
           return (
             <div key={id}>
               <a
                 style={{ cursor: "pointer" }}
                 onClick={async () => {
-                  console.log("1");
-                  dispatch(
-                    saveSerieToRodada({
-                      campeonatoID: campeonato.id,
-                      nameCampeonato: campeonato.name,
-                      serieID: id,
-                      nameSerie: name,
-                    })
-                  );
-
-                  // await dispatch(fetchRodadas({ campeonatoID, serieID }));
-                  // await dispatch(fetchAllUsers({ campeonatoID, serieID }));
-
+                  await dispatch(saveSelectedSerie(getSelectedSerie(id)));
                   navigate("/rodada");
                 }}
               >
-                {name}
+                {name} - {date}
               </a>
               <FaPenToSquare
-                onClick={() => {
-                  dispatch(saveUpdateSerie(id));
+                onClick={async () => {
+                  await dispatch(saveSelectedSerie(getSelectedSerie(id)));
                   navigate("/editarSerie");
                 }}
               />
               <FaTrashCan
                 onClick={() => {
-                  const deleteSerie = { campeonatoID: campeonato.id, id };
-                  dispatch(handleDeleteSerie(deleteSerie));
+                  handleDelete(id);
                 }}
               />
             </div>

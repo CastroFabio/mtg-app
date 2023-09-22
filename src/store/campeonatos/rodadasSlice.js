@@ -1,61 +1,21 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { fazRequest } from "../../utils/client";
-import { endpointRoutes } from "../../utils/endpoitsRoutes";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  rodadasArray: [],
-  rodadaID: null,
-  rodadaUpdate: { id: null, name: "" },
-  error: null,
-  loading: false,
+  selectedRound: null,
 };
 
-var util = require("util");
-
-export const fetchRodadas = createAsyncThunk(
-  "rodadas/fetchRodadas",
-  async (rodada) => {
-    console.log("3");
-    try {
-      const response = await fazRequest(
-        util.format(endpointRoutes.round, rodada.campeonatoID, rodada.serieID),
-        "GET"
-      );
-      const data = await response.json();
-      return data.entities;
-    } catch (error) {
-      return error;
-    }
-  }
-);
-
-const rodadasSlice = createSlice({
-  name: "rodadas",
+const roundsSlice = createSlice({
+  name: "rounds",
   initialState,
   reducers: {
-    saveUpdatePlayer: (state, action) => {
-      state.rodadaUpdate = action.payload;
+    saveSelectedRound: (state, action) => {
+      state.selectedRound = action.payload;
     },
   },
-  extraReducers(builder) {
-    builder
-
-      //Show all rodadas
-      .addCase(fetchRodadas.pending, (state, action) => {
-        state.loading = true;
-      })
-      .addCase(fetchRodadas.fulfilled, (state, action) => {
-        state.loading = false;
-        state.rodadasArray = action.payload;
-      })
-      .addCase(fetchRodadas.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      });
-  },
 });
-export const { saveUpdatePlayer } = rodadasSlice.actions;
 
-export const selectAllRodadas = (state) => state.rodadas.rodadasArray;
+export const getSelectedRound = (state) => state.rounds.selectedRound;
 
-export default rodadasSlice.reducer;
+export const { saveSelectedRound } = roundsSlice.actions;
+
+export default roundsSlice.reducer;

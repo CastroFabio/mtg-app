@@ -82,19 +82,6 @@ export const fetchCurrentUserPointBalance = createAsyncThunk(
   }
 );
 
-export const fetchAllUsers = createAsyncThunk(
-  "user/fetchAllUsers",
-  async () => {
-    try {
-      const response = await fazRequest(endpointRoutes.user, "GET");
-      const data = await response.json();
-      return data.entities;
-    } catch (error) {
-      return error;
-    }
-  }
-);
-
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -123,17 +110,6 @@ export const userSlice = createSlice({
         state.error = "An error has occurred!";
         state.loading = false;
         state.isLoggedIn = false;
-      })
-      .addCase(fetchAllUsers.pending, (state, action) => {
-        state.loading = true;
-      })
-      .addCase(fetchAllUsers.fulfilled, (state, action) => {
-        state.loading = false;
-        state.allUsers = action.payload;
-      })
-      .addCase(fetchAllUsers.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
       });
   },
 });
@@ -145,6 +121,5 @@ export const selectCurrentUserError = (state) => state.user.error;
 export const selectCurrentUserIsLoggedIn = (state) => state.user.isLoggedIn;
 export const selectCurrentUserAccessToken = (state) => state.user.accessToken;
 export const selectCurrentUserPoints = (state) => state.user.userPoints;
-export const selectAllUsers = (state) => state.user.allUsers;
 
 export default userSlice.reducer;

@@ -1,59 +1,54 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { FaTrashCan } from "react-icons/fa6";
+import { getSelectedSerie } from "../../store/campeonatos/seriesSlice";
 
-import {
-  handleDeleteSerie,
-  handleUpdateSerie,
-  saveUpdateSerie,
-  selectSerieUpdate,
-} from "../../store/campeonatos/seriesSlice";
-
-import { selectCampeonatoToSeries } from "../../store/campeonatos/campeonatosSlice";
+import { getSelectedTournament } from "../../store/campeonatos/campeonatosSlice";
+import { updateSeries } from "../../utils/seriesEndpoints";
 
 const EditarSerie = () => {
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
-  // const serie = useSelector(selectSerieUpdate);
-  // const campeonato = useSelector(selectCampeonatoToSeries);
-  // useEffect(() => {
-  //   dispatch(saveUpdateSerie(serie.id));
-  // }, []);
-  // const [serieUpdated, setSerieUpdated] = useState({
-  //   id: serie.id,
-  //   name: "",
-  //   campeonatoID: campeonato.id,
-  // });
-  // const onDeleteSerieClick = () => {
-  //   dispatch(handleDeleteSerie(serie.id));
-  // };
-  // const getSerieData = (e) => {
-  //   setSerieUpdated({ ...serieUpdated, name: e.target.value });
-  // };
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   dispatch(handleUpdateSerie(serieUpdated));
-  //   setSerieUpdated({ ...serieUpdated, name: " " });
-  //   navigate("/serie");
-  // };
-  // return (
-  //   <div>
-  //     <h1>{serie.name}</h1>
-  //     <h2>{serie.id}</h2>
-  //     <FaTrashCan onClick={onDeleteSerieClick} />
-  //     <form onSubmit={handleSubmit}>
-  //       <label>Mudar nome da série</label>
-  //       <br />
-  //       <input
-  //         type="text"
-  //         name="name"
-  //         value={serieUpdated.name}
-  //         onChange={getSerieData}
-  //       />
-  //     </form>
-  //   </div>
-  // );
+  const navigate = useNavigate();
+
+  const campeonato = useSelector(getSelectedTournament);
+
+  const serie = useSelector(getSelectedSerie);
+
+  const [getSerieName, setSerieName] = useState(serie.name);
+  const [getSerieDate, setSerieDate] = useState(serie.date);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await updateSeries(campeonato.id, {
+      id: serie.id,
+      name: getSerieName,
+      date: getSerieDate,
+    });
+    navigate("/serie");
+  };
+
+  return (
+    <div>
+      <h1>{serie.name}</h1>
+      <h2>{serie.id}</h2>
+      <form onSubmit={handleSubmit}>
+        <label>Mudar nome da série</label>
+        <br />
+        <input
+          type="text"
+          name="name"
+          value={getSerieName}
+          onChange={(e) => setSerieName(e.target.value)}
+        />
+        <input
+          type="text"
+          name="date"
+          value={getSerieDate}
+          onChange={(e) => setSerieDate(e.target.value)}
+        />
+        <button type="submit">Enviar</button>
+      </form>
+    </div>
+  );
 };
 
 export default EditarSerie;

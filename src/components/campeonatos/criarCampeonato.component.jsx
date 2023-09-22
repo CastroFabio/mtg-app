@@ -9,18 +9,19 @@ const CriarCampeonato = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await createCampeonatos(getCampeonatoName);
+    await createCampeonatos({ name: getCampeonatoName });
     navigate("/campeonato");
   };
   return (
     <form onSubmit={handleSubmit}>
-      <label>Criar campeonato novo</label>
+      <label>Criar novo campeonato</label>
       <input
         type="text"
         name="name"
         value={getCampeonatoName}
         onChange={(e) => setCampeonatoName(e.target.value)}
       />
+      <button type="submit">Enviar</button>
     </form>
   );
 };

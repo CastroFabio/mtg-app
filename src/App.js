@@ -13,10 +13,9 @@ import Series from "./components/series/series.component";
 import EditarSerie from "./components/series/editarSerie.component";
 import CriarSerie from "./components/series/criarSerie.component";
 
-import Rodada from "./components/rodadas/rodadas.component";
+import Rodadas from "./components/rodadas/rodadas.component";
 
 import { Routes, Route } from "react-router-dom";
-import EditarRodada from "./components/rodadas/editarRodada";
 import CriarRodada from "./components/rodadas/criarRodada";
 import BoasVindas from "./components/boasVindas/boasVindas.component";
 
@@ -33,8 +32,7 @@ const App = () => {
         <Route path="/serie" element={<Series />} />
         <Route path="/editarSerie" element={<EditarSerie />} />
         <Route path="/criarSerie" element={<CriarSerie />} />
-        <Route path="/rodada" element={<Rodada />} />
-        <Route path="/editarRodada" element={<EditarRodada />} />
+        <Route path="/rodada" element={<Rodadas />} />
         <Route path="/criarRodada" element={<CriarRodada />} />
       </Route>
     </Routes>

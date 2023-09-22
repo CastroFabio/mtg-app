@@ -1,64 +1,58 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { selectAllUsers } from "../../store/user/userSlice";
-import { selectSerieToRodada } from "../../store/campeonatos/seriesSlice";
-import {
-  saveUpdatePlayer,
-  selectAllRodadas,
-} from "../../store/campeonatos/rodadasSlice";
+import { getSelectedSerie } from "../../store/campeonatos/seriesSlice";
+import { FaTrashCan } from "react-icons/fa6";
+import { getSelectedTournament } from "../../store/campeonatos/campeonatosSlice";
+import { deleteRodadas, fetchRodadas } from "../../utils/rodadasEndpoints";
+import { useState, useEffect } from "react";
 
-import { FaPenToSquare, FaTrashCan } from "react-icons/fa6";
-
-const Rodada = () => {
-  const rodadaArray = useSelector(selectAllRodadas);
-  const usersArray = useSelector(selectAllUsers);
-  const { campeonatoID, nameCampeonato, serieID, nameSerie } =
-    useSelector(selectSerieToRodada);
-
-  const dispatch = useDispatch();
+const Rodadas = () => {
   const navigate = useNavigate();
 
-  const nameUser = (userId) => {
-    const username = usersArray.filter((user) => {
-      if (user.id == userId) {
-        return user;
-      }
-    });
-    return username[0].username;
+  const [getRounds, setRounds] = useState(null);
+  const [getDeleted, deleted] = useState(null);
+
+  const campeonato = useSelector(getSelectedTournament);
+  const serie = useSelector(getSelectedSerie);
+
+  const handleDelete = async (id) => {
+    await deleteRodadas(campeonato.id, serie.id, id);
+    deleted(id);
   };
+
+  useEffect(() => {
+    const getData = async () => {
+      const data = await fetchRodadas(campeonato.id, serie.id);
+      setRounds(data);
+    };
+
+    getData();
+  }, [getDeleted]);
+
+  if (getRounds == null) {
+    return <h2>Loading...</h2>;
+  }
 
   return (
     <div>
+      <button onClick={() => navigate("/criarRodada")}>Criar Rodada</button>
+
       <h1>
-        {nameCampeonato} - {nameSerie} - Players
+        {campeonato.name} - {serie.name} - Rodadas
       </h1>
-      {rodadaArray &&
-        rodadaArray.map(({ id, points, userId }) => {
+      {getRounds &&
+        getRounds.map(({ id, userId, points }) => {
           return (
             <div key={id}>
-              <p>
-                {nameUser(userId)} {points}
-                <FaPenToSquare
-                  onClick={() => {
-                    dispatch(
-                      saveUpdatePlayer({
-                        id,
-                        points,
-                        userId,
-                        username: nameUser(userId),
-                      })
-                    );
-                    navigate("/editarRodada");
-                  }}
-                />
-                {/*<FaTrashCan
-                  onClick={() => {
-                    const deleteSerie = { campeonatoID: campeonato.id, id };
-                    dispatch(handleDeleteSerie(deleteSerie));
-                  }}
-                /> */}
-              </p>
+              <a style={{ cursor: "pointer" }}>
+                {userId} - {points}
+              </a>
+              <FaTrashCan
+                onClick={() => {
+                  handleDelete(id);
+                }}
+              />
             </div>
           );
         })}
@@ -66,4 +60,4 @@ const Rodada = () => {
   );
 };
 
-export default Rodada;
+export default Rodadas;

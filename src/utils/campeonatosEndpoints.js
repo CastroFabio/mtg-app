@@ -22,9 +22,9 @@ export const deleteCampeonatos = async (id) => {
   }
 };
 
-export const createCampeonatos = async (name) => {
+export const createCampeonatos = async (campeonato) => {
   try {
-    const body = JSON.stringify({ name });
+    const body = JSON.stringify({ name: campeonato.name });
     const response = await fazRequest(
       util.format(endpointRoutes.tournament),
       "POST",
@@ -37,11 +37,11 @@ export const createCampeonatos = async (name) => {
   }
 };
 
-export const updateCampeonatos = async (id, name) => {
+export const updateCampeonatos = async (campeonato) => {
   try {
-    const body = JSON.stringify({ name });
+    const body = JSON.stringify({ name: campeonato.name });
     const response = await fazRequest(
-      util.format(endpointRoutes.tournamentByID, id),
+      util.format(endpointRoutes.tournamentByID, campeonato.id),
       "PATCH",
       body
     );

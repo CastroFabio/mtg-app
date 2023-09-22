@@ -1,9 +1,7 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { FaCirclePlus, FaPenToSquare, FaTrashCan } from "react-icons/fa6";
-
 import { saveSelectedTournament } from "../../store/campeonatos/campeonatosSlice";
 import {
   fetchCampeonatos,
@@ -11,13 +9,13 @@ import {
 } from "../../utils/campeonatosEndpoints";
 
 const Campeonatos = () => {
-  const getSelectedTournament = (id) => getTournaments.find((x) => x.id == id);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [getTournaments, setTournaments] = useState(null);
   const [getDeleted, deleted] = useState(null);
+
+  const getSelectedTournament = (id) => getTournaments.find((x) => x.id === id);
 
   const handleDelete = async (id) => {
     await deleteCampeonatos(id);

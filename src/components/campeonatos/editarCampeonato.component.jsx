@@ -15,7 +15,7 @@ const EditarCampeonato = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await updateCampeonatos(campeonato.id, getCampeonatoName);
+    await updateCampeonatos({ id: campeonato.id, name: getCampeonatoName });
     navigate("/campeonato");
   };
 

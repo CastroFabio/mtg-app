@@ -1,37 +1,43 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { createSeries } from "../../utils/seriesEndpoints";
+import { useSelector } from "react-redux";
+import { getSelectedTournament } from "../../store/campeonatos/campeonatosSlice";
 
-import { handleCreateSerie } from "../../store/campeonatos/seriesSlice";
-import { selectCampeonatoToSeries } from "../../store/campeonatos/campeonatosSlice";
+const CriarSerie = () => {
+  const [getSerieName, setSerieName] = useState("");
+  const [getSerieDate, setSerieDate] = useState(new Date());
 
-const CriarCampeonato = () => {
-  // const [tempSerieName, setTempSerieName] = useState("");
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
-  // const campeonato = useSelector(selectCampeonatoToSeries);
-  // const getSerieData = (e) => {
-  //   setTempSerieName(e.target.value);
-  // };
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   await dispatch(
-  //     handleCreateSerie({ campeonatoID: campeonato.id, tempSerieName })
-  //   );
-  //   setTempSerieName(" ");
-  //   navigate("/serie");
-  // };
-  // return (
-  //   <form onSubmit={handleSubmit}>
-  //     <label>Criar Série nova</label>
-  //     <input
-  //       type="text"
-  //       name="name"
-  //       value={tempSerieName}
-  //       onChange={getSerieData}
-  //     />
-  //   </form>
-  // );
+  const navigate = useNavigate();
+
+  const campeonato = useSelector(getSelectedTournament);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await createSeries(campeonato.id, {
+      name: getSerieName,
+      date: getSerieDate,
+    });
+    navigate("/serie");
+  };
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>Criar nova serie</label>
+      <input
+        type="text"
+        name="name"
+        value={getSerieName}
+        onChange={(e) => setSerieName(e.target.value)}
+      />
+      <input
+        type="text"
+        name="date"
+        value={getSerieDate}
+        onChange={(e) => setSerieDate(e.target.value)}
+      />
+      <button type="submit">Enviar</button>
+    </form>
+  );
 };
 
-export default CriarCampeonato;
+export default CriarSerie;
