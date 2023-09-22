@@ -44,7 +44,6 @@ const Campeonatos = () => {
 
   return (
     <section>
-      <h1>Campeonatos</h1>
       {getTournaments &&
         getTournaments.map(({ id, name }) => {
           return (

@@ -40,59 +40,20 @@ const Navigation = () => {
   return (
     <Fragment>
       <header>
-        <span className="inner-text">GEEK PLACE PLAY'N'PUB </span>
+        <div className="wrapper">
+          <span className="shadow bottom">GEEK PLACE PLAY'N'PUB </span>
+        </div>
       </header>
       <div className="main-container">
-        <aside className="sidebar">
-          <ul>
-            <li>
-              <a
-                className="link-button"
-                onClick={() => {
-                  navigate("/campeonato");
-                }}
-              >
-                <div className="icon-menu">
-                  <FaRegCalendar />
-                </div>
-                <span>Campeonatos</span>
-              </a>
-            </li>
-            <li>
-              <a
-                className="link-button"
-                onClick={() => {
-                  navigate("/campeonato");
-                }}
-              >
-                <div className="icon-menu">
-                  <FaRegCalendar />
-                </div>
-                <span>Campeonatos</span>
-              </a>
-            </li>
-            <li>
-              <a
-                className="link-button"
-                onClick={() => {
-                  navigate("/campeonato");
-                }}
-              >
-                <div className="icon-menu">
-                  <FaRegCalendar />
-                </div>
-                <span>Campeonatos</span>
-              </a>
-            </li>
-          </ul>
-        </aside>
-
-        <main className="content">
+        <main className="content ">
           <div className="content-header-backgroud"></div>
 
           <div className="content-header">
             <div className="content-header-title">
-              <div> {url?.title ?? ""}</div>
+              <div>
+                {" "}
+                <h2>{url?.title ?? ""}</h2>
+              </div>
               <div> {url?.url ?? ""} </div>
             </div>
             {urlToNavigate ? (
@@ -103,8 +64,11 @@ const Navigation = () => {
               ""
             )}
           </div>
-          <div className="content-components">
-            <Outlet />
+          <div className="content-components ">
+            <div className="watermark"></div>
+            <div style={{ position: "relative" }}>
+              <Outlet />
+            </div>
           </div>
         </main>
       </div>
