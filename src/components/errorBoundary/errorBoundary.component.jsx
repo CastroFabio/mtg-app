@@ -10,8 +10,6 @@ class ErrorBoundary extends React.Component {
 
   static getDerivedStateFromError(error) {
     if (error.message === "401") {
-      localStorage.removeItem("accessToken");
-
       return window.location.replace("/signin");
     }
 
