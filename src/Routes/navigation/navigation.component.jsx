@@ -12,6 +12,7 @@ import {
 } from "react-icons/fa6";
 
 import {
+  logout,
   selectCurrentUser,
   selectCurrentUserIsLoggedIn,
   selectCurrentUserPoints,
@@ -23,7 +24,9 @@ import {
 } from "../../store/campeonatos/navigationSlice";
 
 const Navigation = () => {
+  const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
+  const currentUserPoints = useSelector(selectCurrentUserPoints);
 
   const url = useSelector(getUrl);
   const urlToNavigate = useSelector(getButtonAction);
@@ -39,7 +42,37 @@ const Navigation = () => {
     <Fragment>
       <header>
         <div className="wrapper">
-          <span className="shadow bottom">GEEK PLACE PLAY'N'PUB </span>
+          <div className="shadow bottom">
+            <div className="header-content">
+              <div className="header-content-1">
+                <h2>GEEK PLACE PLAY'N'PUB</h2>
+              </div>
+              <div className="header-content-2">
+                {currentUser ? (
+                  <Fragment>
+                    <div className="header-content-3">
+                      <div>Olá {usernameFormatado}</div>
+                    </div>
+                    <div>{currentUserPoints} pontos</div>
+                    <div>
+                      <a
+                        onClick={() => {
+                          navigate("/");
+                          dispatch(logout());
+                        }}
+                      >
+                        Logout
+                      </a>
+                    </div>
+                  </Fragment>
+                ) : (
+                  <div>
+                    <a onClick={() => navigate("/signin")}>Login</a>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
         </div>
       </header>
       <div className="main-container">
@@ -53,13 +86,32 @@ const Navigation = () => {
               </div>
               <div> {url?.url ?? ""} </div>
             </div>
-            {urlToNavigate && currentUser.admin ? (
-              <a className="btn-white" onClick={() => navigate(urlToNavigate)}>
-                Criar
-              </a>
-            ) : (
-              ""
-            )}
+            <div className="content-header-buttons">
+              {currentUser && currentUser.admin ? (
+                <h2>
+                  <a onClick={() => navigate("/creditos")}>Créditos</a>
+                </h2>
+              ) : (
+                ""
+              )}
+              {currentUser ? (
+                <h2>
+                  <a onClick={() => navigate("/campeonato")}>Campeonatos</a>
+                </h2>
+              ) : (
+                ""
+              )}
+              {urlToNavigate && currentUser && currentUser.admin ? (
+                <a
+                  className="btn-white"
+                  onClick={() => navigate(urlToNavigate)}
+                >
+                  Criar
+                </a>
+              ) : (
+                ""
+              )}
+            </div>
           </div>
           <div className="content-components">
             <div className="watermark"></div>
