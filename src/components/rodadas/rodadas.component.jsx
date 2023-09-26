@@ -20,19 +20,12 @@ const Rodadas = () => {
   }
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [getRounds, setRounds] = useState(null);
   const [getDeleted, deleted] = useState(null);
 
   const campeonato = useSelector(getSelectedTournament);
   const serie = useSelector(getSelectedSerie);
-
-  dispatch(
-    setUrl({ title: "Rodadas", url: `${campeonato.name} > ${serie.name}` })
-  );
-
-  dispatch(setButtonAction("/criarRodada"));
 
   const handleDelete = async (campeonatoId, serieId, id) => {
     await deleteRodadas(campeonatoId, serieId, id);
@@ -42,6 +35,14 @@ const Rodadas = () => {
   useEffect(() => {
     const getData = async () => {
       try {
+        dispatch(
+          setUrl({
+            title: "Rodadas",
+            url: `${campeonato.name} > ${serie.name}`,
+          })
+        );
+
+        dispatch(setButtonAction("/criarRodada"));
         const dataRodadas = await fetchRodadas(campeonato.id, serie.id);
         const dataRodadsWithUser = await Promise.all(
           await dataRodadas.map(async (element) => {
