@@ -27,7 +27,7 @@ const RodadasCard = ({
         {user.id} - {user.username} - pontos: {points}
       </div>
       {currentUser.admin ? (
-        <div>
+        <div style={{ display: "flex" }}>
           <div className="campenatos-botoes">
             <a
               className="btn-white small"

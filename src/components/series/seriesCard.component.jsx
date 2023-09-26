@@ -27,7 +27,7 @@ const SeriesCard = ({ campeonato, serie, handleDelete }) => {
         </div>
       </a>
       {currentUser.admin ? (
-        <div>
+        <div style={{ display: "flex" }}>
           <div className="campenatos-botoes">
             <a
               className="btn-white small"
