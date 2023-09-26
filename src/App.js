@@ -1,3 +1,5 @@
+import { Routes, Route } from "react-router-dom";
+
 import "./App.css";
 
 import Login from "./components/signIn/signIn.component";
@@ -14,10 +16,13 @@ import EditarSerie from "./components/series/editarSerie.component";
 import CriarSerie from "./components/series/criarSerie.component";
 
 import Rodadas from "./components/rodadas/rodadas.component";
-
-import { Routes, Route } from "react-router-dom";
 import CriarRodada from "./components/rodadas/criarRodada";
+
 import BoasVindas from "./components/boasVindas/boasVindas.component";
+
+import UserCredits from "./components/userCredits/userCredits.components";
+import CriarCredito from "./components/userCredits/criarCredito.component";
+
 import ErrorBoundary from "./components/errorBoundary/errorBoundary.component";
 
 const App = () => {
@@ -36,6 +41,8 @@ const App = () => {
           <Route path="/criarSerie" element={<CriarSerie />} />
           <Route path="/rodada" element={<Rodadas />} />
           <Route path="/criarRodada" element={<CriarRodada />} />
+          <Route path="/creditos" element={<UserCredits />} />
+          <Route path="/criarCredito" element={<CriarCredito />} />
         </Route>
       </Routes>
     </ErrorBoundary>

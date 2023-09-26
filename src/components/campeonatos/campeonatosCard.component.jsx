@@ -2,7 +2,7 @@ import "./campeonatosCard.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaCirclePlus, FaPenToSquare, FaTrashCan } from "react-icons/fa6";
+
 import { saveSelectedTournament } from "../../store/campeonatos/campeonatosSlice";
 import { selectCurrentUser } from "../../store/user/userSlice";
 

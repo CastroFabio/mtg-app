@@ -34,7 +34,7 @@ export const handleLogin = createAsyncThunk(
         setInLocalStorage("accessToken", access_token);
 
         const responseBalance = await fazRequest(
-          util.format(endpointRoutes.userBalance, decodedPayload.id),
+          util.format(endpointRoutes.userBalanceById, decodedPayload.id),
           "GET"
         );
         const balance = await responseBalance.json();

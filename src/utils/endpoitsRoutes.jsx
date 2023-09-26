@@ -10,5 +10,7 @@ export const endpointRoutes = {
   signUp: "/auth/signup",
   user: "/user",
   userById: "/user/%s",
-  userBalance: "/user-point/balance/%s",
+  userBalance: "/user-point/balance",
+  userBalanceById: "/user-point/balance/%s",
+  userPoints: "/user-point",
 };
