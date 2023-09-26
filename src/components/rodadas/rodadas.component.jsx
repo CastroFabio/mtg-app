@@ -11,6 +11,7 @@ import {
   setButtonAction,
   setUrl,
 } from "../../store/campeonatos/navigationSlice";
+import RodadasCard from "./rodadasCard.component";
 
 const Rodadas = () => {
   const [error, setError] = useState(null);
@@ -33,8 +34,8 @@ const Rodadas = () => {
 
   dispatch(setButtonAction("/criarRodada"));
 
-  const handleDelete = async (id) => {
-    await deleteRodadas(campeonato.id, serie.id, id);
+  const handleDelete = async (campeonatoId, serieId, id) => {
+    await deleteRodadas(campeonatoId, serieId, id);
     deleted(id);
   };
 
@@ -49,6 +50,8 @@ const Rodadas = () => {
           })
         );
         setRounds(dataRodadsWithUser);
+        console.log("asdasasdas");
+        console.log(dataRodadsWithUser);
       } catch (err) {
         setError(err);
       }
@@ -62,26 +65,25 @@ const Rodadas = () => {
   }
 
   return (
-    <section>
-      <h1>
-        {campeonato.name} - {serie.name} - Rodadas
-      </h1>
-      {getRounds &&
-        getRounds.map(({ id, points, user }) => {
-          return (
-            <div key={id}>
-              <a style={{ cursor: "pointer" }}>
-                {user.id} - {user.username} - {points}
-              </a>
-              <FaTrashCan
-                onClick={() => {
-                  handleDelete(id);
-                }}
-              />
-            </div>
-          );
-        })}
-    </section>
+    <div className="rodadas">
+      <div className="campeonatos">
+        {getRounds &&
+          getRounds.map(({ id, points, user }) => {
+            return (
+              <div key={user.id}>
+                <RodadasCard
+                  campeonato={campeonato}
+                  serie={serie}
+                  rodadaId={id}
+                  user={user}
+                  points={points}
+                  handleDelete={handleDelete}
+                />
+              </div>
+            );
+          })}
+      </div>
+    </div>
   );
 };
 

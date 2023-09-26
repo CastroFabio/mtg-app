@@ -10,6 +10,7 @@ import {
   setButtonAction,
   setUrl,
 } from "../../store/campeonatos/navigationSlice";
+import SeriesCard from "./seriesCard.component";
 
 const Series = () => {
   const [error, setError] = useState(null);
@@ -26,24 +27,22 @@ const Series = () => {
 
   const campeonato = useSelector(getSelectedTournament);
 
-  dispatch(setUrl({ title: "Series", url: `${campeonato.name}` }));
-  dispatch(setButtonAction("/criarSerie"));
-
-  const getSelectedSerie = (id) => getSeries.find((x) => x.id === id);
-
-  const handleDelete = async (id) => {
-    await deleteSeries(campeonato.id, id);
+  const handleDelete = async (campeonatoId, id) => {
+    await deleteSeries(campeonatoId, id);
     deleted(id);
   };
 
   useEffect(() => {
     const getData = async () => {
       try {
+        dispatch(setUrl({ title: "Series", url: `${campeonato.name}` }));
+        dispatch(setButtonAction("/criarSerie"));
         let [dataSeries, dataPontuacaoCampeonato] = await Promise.all([
           fetchSeries(campeonato.id),
           fetchPontuacaoCampeonatos(campeonato.id),
         ]);
 
+        console.log(dataSeries);
         setSeries(dataSeries);
         setPontuacaoCampeonato(dataPontuacaoCampeonato);
       } catch (err) {
@@ -59,46 +58,34 @@ const Series = () => {
   }
 
   return (
-    <section>
-      <h1>{campeonato.name} - Séries</h1>
-      {getSeries &&
-        getSeries.map(({ id, name, date }) => {
-          return (
-            <div key={id}>
-              <a
-                style={{ cursor: "pointer" }}
-                onClick={async () => {
-                  await dispatch(saveSelectedSerie(getSelectedSerie(id)));
-                  navigate("/rodada");
-                }}
-              >
-                {name} - {date}
-              </a>
-              <FaPenToSquare
-                onClick={async () => {
-                  await dispatch(saveSelectedSerie(getSelectedSerie(id)));
-                  navigate("/editarSerie");
-                }}
-              />
-              <FaTrashCan
-                onClick={() => {
-                  handleDelete(id);
-                }}
-              />
-            </div>
-          );
-        })}
+    <div className="series">
+      <div className="campeonatos">
+        {getSeries &&
+          getSeries.map((serie) => {
+            return (
+              <div key={serie.id}>
+                <SeriesCard
+                  campeonato={campeonato}
+                  serie={serie}
+                  handleDelete={handleDelete}
+                />
+              </div>
+            );
+          })}
+      </div>
 
-      <h1>Pontuacao</h1>
-      {getPontuacaoCampeonato &&
-        getPontuacaoCampeonato.map(({ userId, userName, points }) => {
-          return (
-            <div key={userId}>
-              {userName} - {points}
-            </div>
-          );
-        })}
-    </section>
+      <div className="pontuacao">
+        <h1>Pontuação no campeonato</h1>
+        {getPontuacaoCampeonato &&
+          getPontuacaoCampeonato.map(({ userId, userName, points }) => {
+            return (
+              <div key={userId}>
+                {userName} - {points}
+              </div>
+            );
+          })}
+      </div>
+    </div>
   );
 };
 

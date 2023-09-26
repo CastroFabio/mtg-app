@@ -1,8 +1,6 @@
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaCirclePlus, FaPenToSquare, FaTrashCan } from "react-icons/fa6";
-import { saveSelectedTournament } from "../../store/campeonatos/campeonatosSlice";
 import {
   fetchCampeonatos,
   deleteCampeonatos,
@@ -24,8 +22,6 @@ const Campeonatos = () => {
 
   const [getTournaments, setTournaments] = useState(null);
   const [getDeleted, deleted] = useState(null);
-
-  const getSelectedTournament = (id) => getTournaments.find((x) => x.id === id);
 
   const handleDelete = async (id) => {
     await deleteCampeonatos(id);
@@ -51,40 +47,19 @@ const Campeonatos = () => {
   }
 
   return (
-    <section className="campeonatos">
+    <div className="campeonatos">
       {getTournaments &&
         getTournaments.map((campeonato) => {
           return (
             <div key={campeonato.id}>
-              {/* <a
-                style={{ cursor: "pointer" }}
-                onClick={async () => {
-                  await dispatch(
-                    saveSelectedTournament(getSelectedTournament(id))
-                  );
-                  navigate("/serie");
-                }}
-              >
-                {name}
-              </a>
-              <FaPenToSquare
-                onClick={async () => {
-                  await dispatch(
-                    saveSelectedTournament(getSelectedTournament(id))
-                  );
-                  navigate("/editarCampeonato");
-                }}
+              <CampeonatosCard
+                campeonato={campeonato}
+                handleDelete={handleDelete}
               />
-              <FaTrashCan
-                onClick={() => {
-                  handleDelete(id);
-                }}
-              /> */}
-              <CampeonatosCard {...campeonato} />
             </div>
           );
         })}
-    </section>
+    </div>
   );
 };
 

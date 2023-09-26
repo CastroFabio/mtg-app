@@ -16,6 +16,7 @@ const CriarCampeonato = () => {
     <section>
       <form onSubmit={handleSubmit}>
         <label>Criar novo campeonato</label>
+        <br />
         <input
           type="text"
           name="name"

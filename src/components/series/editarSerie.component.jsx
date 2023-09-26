@@ -5,6 +5,7 @@ import { getSelectedSerie } from "../../store/campeonatos/seriesSlice";
 
 import { getSelectedTournament } from "../../store/campeonatos/campeonatosSlice";
 import { updateSeries } from "../../utils/seriesEndpoints";
+import formatDate from "../../utils/formatDate";
 
 const EditarSerie = () => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const EditarSerie = () => {
   const serie = useSelector(getSelectedSerie);
 
   const [getSerieName, setSerieName] = useState(serie.name);
-  const [getSerieDate, setSerieDate] = useState(serie.date);
+  const [getSerieDate, setSerieDate] = useState(formatDate(serie.date));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,10 +29,12 @@ const EditarSerie = () => {
 
   return (
     <section>
-      <h1>{serie.name}</h1>
       <h2>{serie.id}</h2>
+      <h1>{serie.name}</h1>
+
       <form onSubmit={handleSubmit}>
         <label>Mudar nome da série</label>
+        <br />
         <br />
         <input
           type="text"

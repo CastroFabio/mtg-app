@@ -1,11 +1,13 @@
-import "./campeonatosCard.css";
+import "../campeonatos/campeonatosCard.css";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaCirclePlus, FaPenToSquare, FaTrashCan } from "react-icons/fa6";
 import { saveSelectedTournament } from "../../store/campeonatos/campeonatosSlice";
+import { saveSelectedSerie } from "../../store/campeonatos/seriesSlice";
+import formatDate from "../../utils/formatDate";
 
-const CampeonatosCard = ({ campeonato, handleDelete }) => {
+const SeriesCard = ({ campeonato, serie, handleDelete }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -14,18 +16,20 @@ const CampeonatosCard = ({ campeonato, handleDelete }) => {
       <a
         style={{ cursor: "pointer", width: "100%" }}
         onClick={async () => {
-          await dispatch(saveSelectedTournament(campeonato));
-          navigate("/serie");
+          await dispatch(saveSelectedSerie(serie));
+          navigate("/rodada");
         }}
       >
-        <div className="campenatos-conteudo">{campeonato.name}</div>
+        <div className="campenatos-conteudo">
+          {serie.name} - {formatDate(serie.date)}
+        </div>
       </a>
       <div className="campenatos-botoes">
         <a
           className="btn-white small"
           onClick={async () => {
-            await dispatch(saveSelectedTournament(campeonato));
-            navigate("/editarCampeonato");
+            await dispatch(saveSelectedSerie(serie));
+            navigate("/editarSerie");
           }}
         >
           Editar
@@ -35,8 +39,8 @@ const CampeonatosCard = ({ campeonato, handleDelete }) => {
         <a
           className="btn-white small"
           onClick={() => {
-            if (window.confirm("Tem certeza que deseja deletar o campeonato?"))
-              handleDelete(campeonato.id);
+            if (window.confirm("Tem certeza que deseja deletar a serie?"))
+              handleDelete(campeonato.id, serie.id);
           }}
         >
           Deletar
@@ -46,4 +50,4 @@ const CampeonatosCard = ({ campeonato, handleDelete }) => {
   );
 };
 
-export default CampeonatosCard;
+export default SeriesCard;

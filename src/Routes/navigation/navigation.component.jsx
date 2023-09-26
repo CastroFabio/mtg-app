@@ -51,7 +51,6 @@ const Navigation = () => {
           <div className="content-header">
             <div className="content-header-title">
               <div>
-                {" "}
                 <h2>{url?.title ?? ""}</h2>
               </div>
               <div> {url?.url ?? ""} </div>
@@ -64,9 +63,9 @@ const Navigation = () => {
               ""
             )}
           </div>
-          <div className="content-components ">
+          <div className="content-components">
             <div className="watermark"></div>
-            <div style={{ position: "relative" }}>
+            <div className="content-components-outlet">
               <Outlet />
             </div>
           </div>

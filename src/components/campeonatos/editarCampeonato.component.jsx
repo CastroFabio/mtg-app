@@ -10,7 +10,7 @@ const EditarCampeonato = () => {
   const navigate = useNavigate();
 
   const campeonato = useSelector(getSelectedTournament);
-
+  console.log(campeonato);
   const [getCampeonatoName, setCampeonatoName] = useState(campeonato.name);
 
   const handleSubmit = async (e) => {
@@ -26,12 +26,14 @@ const EditarCampeonato = () => {
       <form onSubmit={handleSubmit}>
         <label>Mudar nome do campeonato</label>
         <br />
+        <br />
         <input
           type="text"
           name="name"
           value={getCampeonatoName}
           onChange={(e) => setCampeonatoName(e.target.value)}
         />
+        <button type="submit">Salvar</button>
       </form>
     </section>
   );
