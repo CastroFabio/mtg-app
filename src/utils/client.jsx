@@ -33,10 +33,16 @@ export const fazRequest = async (
 
   console.log(`URL: ${completeURL}`);
   console.log(request);
+  try {
+    const response = await fetch(completeURL, request);
+    console.log(response);
 
-  const response = await fetch(completeURL, request);
+    if (response.status > 400 && response.status < 499) {
+      throw new Error(response.status);
+    }
 
-  console.log(response);
-
-  return response;
+    return response;
+  } catch (err) {
+    throw err;
+  }
 };

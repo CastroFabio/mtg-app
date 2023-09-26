@@ -13,6 +13,11 @@ import {
 } from "../../store/campeonatos/navigationSlice";
 
 const Rodadas = () => {
+  const [error, setError] = useState(null);
+  if (error) {
+    throw error;
+  }
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -35,14 +40,18 @@ const Rodadas = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const dataRodadas = await fetchRodadas(campeonato.id, serie.id);
-      const dataRodadsWithUser = await Promise.all(
-        await dataRodadas.map(async (element) => {
-          const dataUser = await fetchUserById(element.userId);
-          return { ...element, user: dataUser[0] };
-        })
-      );
-      setRounds(dataRodadsWithUser);
+      try {
+        const dataRodadas = await fetchRodadas(campeonato.id, serie.id);
+        const dataRodadsWithUser = await Promise.all(
+          await dataRodadas.map(async (element) => {
+            const dataUser = await fetchUserById(element.userId);
+            return { ...element, user: dataUser[0] };
+          })
+        );
+        setRounds(dataRodadsWithUser);
+      } catch (err) {
+        setError(err);
+      }
     };
 
     getData();

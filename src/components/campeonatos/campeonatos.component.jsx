@@ -14,6 +14,11 @@ import {
 import CampeonatosCard from "./campeonatosCard.component";
 
 const Campeonatos = () => {
+  const [error, setError] = useState(null);
+  if (error) {
+    throw error;
+  }
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -28,18 +33,17 @@ const Campeonatos = () => {
   };
 
   useEffect(() => {
-    const dispatches = async () => {
-      await dispatch(setUrl({ title: "Campeonatos", url: "" }));
-      await dispatch(setButtonAction("/criarCampeonato"));
+    const load = async () => {
+      try {
+        await dispatch(setUrl({ title: "Campeonatos", url: "" }));
+        await dispatch(setButtonAction("/criarCampeonato"));
+        setTournaments(await fetchCampeonatos());
+      } catch (err) {
+        setError(err);
+      }
     };
 
-    const getData = async () => {
-      const data = await fetchCampeonatos();
-      setTournaments(data);
-    };
-
-    getData();
-    dispatches();
+    load();
   }, [getDeleted]);
 
   if (getTournaments == null) {

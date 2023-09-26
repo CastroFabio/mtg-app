@@ -18,24 +18,27 @@ import Rodadas from "./components/rodadas/rodadas.component";
 import { Routes, Route } from "react-router-dom";
 import CriarRodada from "./components/rodadas/criarRodada";
 import BoasVindas from "./components/boasVindas/boasVindas.component";
+import ErrorBoundary from "./components/errorBoundary/errorBoundary.component";
 
 const App = () => {
   return (
-    <Routes>
-      <Route index path="/signin" element={<Login />} />
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/" element={<Navigation />}>
-        <Route path="/" element={<BoasVindas />} />
-        <Route path="/campeonato" element={<Campeonatos />} />
-        <Route path="/editarCampeonato" element={<EditarCampeonato />} />
-        <Route path="/criarCampeonato" element={<CriarCampeonato />} />
-        <Route path="/serie" element={<Series />} />
-        <Route path="/editarSerie" element={<EditarSerie />} />
-        <Route path="/criarSerie" element={<CriarSerie />} />
-        <Route path="/rodada" element={<Rodadas />} />
-        <Route path="/criarRodada" element={<CriarRodada />} />
-      </Route>
-    </Routes>
+    <ErrorBoundary fallback={<p>Something went wrong</p>}>
+      <Routes>
+        <Route index path="/signin" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/" element={<Navigation />}>
+          <Route path="/" element={<BoasVindas />} />
+          <Route path="/campeonato" element={<Campeonatos />} />
+          <Route path="/editarCampeonato" element={<EditarCampeonato />} />
+          <Route path="/criarCampeonato" element={<CriarCampeonato />} />
+          <Route path="/serie" element={<Series />} />
+          <Route path="/editarSerie" element={<EditarSerie />} />
+          <Route path="/criarSerie" element={<CriarSerie />} />
+          <Route path="/rodada" element={<Rodadas />} />
+          <Route path="/criarRodada" element={<CriarRodada />} />
+        </Route>
+      </Routes>
+    </ErrorBoundary>
   );
 };
 

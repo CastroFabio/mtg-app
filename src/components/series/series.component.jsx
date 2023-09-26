@@ -12,6 +12,11 @@ import {
 } from "../../store/campeonatos/navigationSlice";
 
 const Series = () => {
+  const [error, setError] = useState(null);
+  if (error) {
+    throw error;
+  }
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -33,13 +38,17 @@ const Series = () => {
 
   useEffect(() => {
     const getData = async () => {
-      let [dataSeries, dataPontuacaoCampeonato] = await Promise.all([
-        fetchSeries(campeonato.id),
-        fetchPontuacaoCampeonatos(campeonato.id),
-      ]);
+      try {
+        let [dataSeries, dataPontuacaoCampeonato] = await Promise.all([
+          fetchSeries(campeonato.id),
+          fetchPontuacaoCampeonatos(campeonato.id),
+        ]);
 
-      setSeries(dataSeries);
-      setPontuacaoCampeonato(dataPontuacaoCampeonato);
+        setSeries(dataSeries);
+        setPontuacaoCampeonato(dataPontuacaoCampeonato);
+      } catch (err) {
+        setError(err);
+      }
     };
 
     getData();

@@ -6,7 +6,6 @@ import jwt from "jwt-decode";
 var util = require("util");
 
 const initialState = {
-  accessToken: null,
   currentUser: null,
   isLoggedIn: false,
   loading: false,
@@ -100,7 +99,6 @@ export const userSlice = createSlice({
         state.error = null;
         state.loading = false;
         state.currentUser = action.payload.decodedPayload;
-        state.accessToken = action.payload.access_token;
         state.userPoints = action.payload.points;
       })
       .addCase(handleLogin.pending, (state, action) => {
@@ -119,7 +117,6 @@ export const { loginUser, logout } = userSlice.actions;
 export const selectCurrentUser = (state) => state.user.currentUser;
 export const selectCurrentUserError = (state) => state.user.error;
 export const selectCurrentUserIsLoggedIn = (state) => state.user.isLoggedIn;
-export const selectCurrentUserAccessToken = (state) => state.user.accessToken;
 export const selectCurrentUserPoints = (state) => state.user.userPoints;
 
 export default userSlice.reducer;

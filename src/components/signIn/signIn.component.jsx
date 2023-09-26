@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   handleLogin,
   selectCurrentUserError,
   selectCurrentUser,
+  logout,
 } from "../../store/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -15,9 +16,9 @@ const defaultFormFields = {
 
 const Login = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
+  const [getFinishedUseEffect, setFinishedUseEffect] = useState(false);
+
   const { username, password } = formFields;
-  const currentUserError = useSelector(selectCurrentUserError);
-  const currentUser = useSelector(selectCurrentUser);
 
   const dispatch = useDispatch();
 
@@ -31,6 +32,18 @@ const Login = () => {
     const { name, value } = event.target;
     setFormFields({ ...formFields, [name]: value });
   };
+
+  useEffect(() => {
+    const load = async () => {
+      await dispatch(await logout());
+      setFinishedUseEffect(true);
+    };
+
+    load();
+  }, []);
+
+  const currentUserError = useSelector(selectCurrentUserError);
+  const currentUser = useSelector(selectCurrentUser);
 
   return (
     <div className="login-page">
@@ -58,7 +71,9 @@ const Login = () => {
           </p>
           {currentUserError ? <p>{currentUserError}</p> : null}
 
-          {currentUser ? <Navigate to="/" replace={true} /> : null}
+          {currentUser && getFinishedUseEffect ? (
+            <Navigate to="/" replace={true} />
+          ) : null}
         </form>
       </div>
     </div>
