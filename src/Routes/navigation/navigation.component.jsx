@@ -24,8 +24,6 @@ import {
 
 const Navigation = () => {
   const currentUser = useSelector(selectCurrentUser);
-  const currentUserIsLoggedIn = useSelector(selectCurrentUserIsLoggedIn);
-  const currentUserPoints = useSelector(selectCurrentUserPoints);
 
   const url = useSelector(getUrl);
   const urlToNavigate = useSelector(getButtonAction);
@@ -55,7 +53,7 @@ const Navigation = () => {
               </div>
               <div> {url?.url ?? ""} </div>
             </div>
-            {urlToNavigate ? (
+            {urlToNavigate && currentUser.admin ? (
               <a className="btn-white" onClick={() => navigate(urlToNavigate)}>
                 Criar
               </a>

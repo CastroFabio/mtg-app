@@ -5,6 +5,11 @@ import { useSelector } from "react-redux";
 import { getSelectedTournament } from "../../store/campeonatos/campeonatosSlice";
 
 const CriarSerie = () => {
+  const [error, setError] = useState(null);
+  if (error) {
+    throw error;
+  }
+
   const [getSerieName, setSerieName] = useState("");
   const [getSerieDate, setSerieDate] = useState(new Date());
 
@@ -13,12 +18,16 @@ const CriarSerie = () => {
   const campeonato = useSelector(getSelectedTournament);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    await createSeries(campeonato.id, {
-      name: getSerieName,
-      date: getSerieDate,
-    });
-    navigate("/serie");
+    try {
+      e.preventDefault();
+      await createSeries(campeonato.id, {
+        name: getSerieName,
+        date: getSerieDate,
+      });
+      navigate("/serie");
+    } catch (err) {
+      setError(err);
+    }
   };
   return (
     <section>

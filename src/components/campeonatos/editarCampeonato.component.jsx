@@ -7,16 +7,23 @@ import { useState } from "react";
 import { updateCampeonatos } from "../../utils/campeonatosEndpoints";
 
 const EditarCampeonato = () => {
+  const [error, setError] = useState(null);
+  if (error) {
+    throw error;
+  }
   const navigate = useNavigate();
 
   const campeonato = useSelector(getSelectedTournament);
-  console.log(campeonato);
   const [getCampeonatoName, setCampeonatoName] = useState(campeonato.name);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    await updateCampeonatos({ id: campeonato.id, name: getCampeonatoName });
-    navigate("/campeonato");
+    try {
+      e.preventDefault();
+      await updateCampeonatos({ id: campeonato.id, name: getCampeonatoName });
+      navigate("/campeonato");
+    } catch (err) {
+      setError(err);
+    }
   };
 
   return (

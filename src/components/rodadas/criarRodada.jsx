@@ -7,6 +7,11 @@ import { createRodadas } from "../../utils/rodadasEndpoints";
 import { fetchUsers } from "../../utils/userEndpoints";
 
 const CriarRodada = () => {
+  const [error, setError] = useState(null);
+  if (error) {
+    throw error;
+  }
+
   const [getRodadaPoint, setRodadaPoint] = useState(0);
   const [getUserOptions, setUserOptions] = useState(null);
   const [getSelected, setSelected] = useState("");
@@ -17,12 +22,16 @@ const CriarRodada = () => {
   const serie = useSelector(getSelectedSerie);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    await createRodadas(campeonato.id, serie.id, {
-      userId: Number(getSelected),
-      points: Number(getRodadaPoint),
-    });
-    navigate("/rodada");
+    try {
+      e.preventDefault();
+      await createRodadas(campeonato.id, serie.id, {
+        userId: Number(getSelected),
+        points: Number(getRodadaPoint),
+      });
+      navigate("/rodada");
+    } catch (err) {
+      setError(err);
+    }
   };
 
   const handleChange = (event) => {

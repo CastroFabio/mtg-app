@@ -19,7 +19,6 @@ const Series = () => {
   }
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [getSeries, setSeries] = useState(null);
   const [getPontuacaoCampeonato, setPontuacaoCampeonato] = useState(null);
@@ -42,7 +41,6 @@ const Series = () => {
           fetchPontuacaoCampeonatos(campeonato.id),
         ]);
 
-        console.log(dataSeries);
         setSeries(dataSeries);
         setPontuacaoCampeonato(dataPontuacaoCampeonato);
       } catch (err) {

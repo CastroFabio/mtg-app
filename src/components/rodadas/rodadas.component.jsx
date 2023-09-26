@@ -28,8 +28,12 @@ const Rodadas = () => {
   const serie = useSelector(getSelectedSerie);
 
   const handleDelete = async (campeonatoId, serieId, id) => {
-    await deleteRodadas(campeonatoId, serieId, id);
-    deleted(id);
+    try {
+      await deleteRodadas(campeonatoId, serieId, id);
+      deleted(id);
+    } catch (err) {
+      setError(err);
+    }
   };
 
   useEffect(() => {

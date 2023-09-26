@@ -1,6 +1,5 @@
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   fetchCampeonatos,
   deleteCampeonatos,
@@ -18,14 +17,17 @@ const Campeonatos = () => {
   }
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [getTournaments, setTournaments] = useState(null);
   const [getDeleted, deleted] = useState(null);
 
   const handleDelete = async (id) => {
-    await deleteCampeonatos(id);
-    deleted(id);
+    try {
+      await deleteCampeonatos(id);
+      deleted(id);
+    } catch (err) {
+      setError(err);
+    }
   };
 
   useEffect(() => {

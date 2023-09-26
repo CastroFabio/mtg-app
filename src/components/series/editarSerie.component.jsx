@@ -8,6 +8,11 @@ import { updateSeries } from "../../utils/seriesEndpoints";
 import formatDate from "../../utils/formatDate";
 
 const EditarSerie = () => {
+  const [error, setError] = useState(null);
+  if (error) {
+    throw error;
+  }
+
   const navigate = useNavigate();
 
   const campeonato = useSelector(getSelectedTournament);
@@ -18,13 +23,17 @@ const EditarSerie = () => {
   const [getSerieDate, setSerieDate] = useState(formatDate(serie.date));
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    await updateSeries(campeonato.id, {
-      id: serie.id,
-      name: getSerieName,
-      date: getSerieDate,
-    });
-    navigate("/serie");
+    try {
+      e.preventDefault();
+      await updateSeries(campeonato.id, {
+        id: serie.id,
+        name: getSerieName,
+        date: getSerieDate,
+      });
+      navigate("/serie");
+    } catch (err) {
+      setError(err);
+    }
   };
 
   return (
