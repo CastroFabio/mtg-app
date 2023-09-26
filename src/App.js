@@ -27,7 +27,7 @@ import ErrorBoundary from "./components/errorBoundary/errorBoundary.component";
 
 const App = () => {
   return (
-    <ErrorBoundary fallback={<p>Something went wrong</p>}>
+    <ErrorBoundary fallback={<p>Aconteceu um erro inesperado</p>}>
       <Routes>
         <Route index path="/signin" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />

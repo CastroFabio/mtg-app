@@ -30,7 +30,14 @@ class ErrorBoundary extends React.Component {
     if (this.state.hasError) {
       // You can render any custom fallback UI
 
-      return this.props.fallback;
+      return (
+        <div>
+          {this.props.fallback}{" "}
+          <button onClick={() => window.location.replace("/signin")}>
+            Logar novamente
+          </button>
+        </div>
+      );
     }
 
     return this.props.children;

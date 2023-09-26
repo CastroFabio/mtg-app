@@ -55,8 +55,6 @@ const Rodadas = () => {
           })
         );
         setRounds(dataRodadsWithUser);
-        console.log("asdasasdas");
-        console.log(dataRodadsWithUser);
       } catch (err) {
         setError(err);
       }
