@@ -24,13 +24,14 @@ const RodadasCard = ({
   return (
     <div className="campeonatos-card">
       <div className="campenatos-conteudo">
-        {user.id} - {user.username} - pontos: {points}
+        <h2>{user.username} </h2>
+        <p>Pontos: {points}</p>
       </div>
       {currentUser.admin ? (
         <div style={{ display: "flex" }}>
           <div className="campenatos-botoes">
             <a
-              className="btn-white small"
+              className="btn-white small btn-delete"
               onClick={() => {
                 if (window.confirm("Tem certeza que deseja deletar a rodada?"))
                   handleDelete(campeonato.id, serie.id, rodadaId);

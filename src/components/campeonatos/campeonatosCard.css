@@ -8,14 +8,12 @@
 }
 
 .campeonatos-card {
-  align-items: center;
-  display: flex;
+  display: grid;
+  grid-template-columns: 12fr 0.5fr 0.5fr;
   background-color: var(--color-1);
-  min-height: 100px;
   border-radius: 15px;
 }
 .campenatos-conteudo {
-  margin-right: auto;
   padding: 1rem;
 }
 .campenatos-botoes {
@@ -42,13 +40,7 @@
 .campenatos-botoes {
   display: grid;
   grid-template-columns: 1fr 1fr;
-}
-
-.botao-editar {
-}
-
-.botao-deletar {
-  border-radius: 0 10px 10px 0;
+  box-sizing: content-box;
 }
 
 /* campenatos-conteudo

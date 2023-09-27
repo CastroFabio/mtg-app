@@ -30,7 +30,7 @@ const SeriesCard = ({ campeonato, serie, handleDelete }) => {
         <div style={{ display: "flex" }}>
           <div className="campenatos-botoes">
             <a
-              className="btn-white small"
+              className="btn-white small btn-edit"
               onClick={async () => {
                 await dispatch(saveSelectedSerie(serie));
                 navigate("/editarSerie");
@@ -41,7 +41,7 @@ const SeriesCard = ({ campeonato, serie, handleDelete }) => {
           </div>
           <div className="campenatos-botoes">
             <a
-              className="btn-white small"
+              className="btn-white small btn-delete"
               onClick={() => {
                 if (window.confirm("Tem certeza que deseja deletar a serie?"))
                   handleDelete(campeonato.id, serie.id);

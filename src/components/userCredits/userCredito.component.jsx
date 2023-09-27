@@ -8,6 +8,9 @@ import {
 
 import { fetchUsersCreditBalance } from "../../utils/userCreditsEndpoints";
 
+import { saveSelectedUserID } from "../../store/user/userCreditsSlice";
+import { useNavigate } from "react-router-dom";
+
 const UserCredits = () => {
   const [error, setError] = useState(null);
   if (error) {
@@ -15,6 +18,7 @@ const UserCredits = () => {
   }
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [getUsersCreditsBalance, setUsersCreditsBalance] = useState(null);
 
@@ -37,13 +41,20 @@ const UserCredits = () => {
   }
 
   return (
-    <div className="">
+    <div className="rodadas">
       {getUsersCreditsBalance &&
         getUsersCreditsBalance.map(({ userId, userName, points }) => {
           return (
-            <div key={userId}>
-              {userName} {points}
-            </div>
+            <p key={userId}>
+              <a
+                onClick={() => {
+                  dispatch(saveSelectedUserID({ userName, userId }));
+                  navigate("/historico");
+                }}
+              >
+                {userName} {points}
+              </a>
+            </p>
           );
         })}
     </div>
