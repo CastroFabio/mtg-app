@@ -68,14 +68,14 @@ const Login = () => {
             onChange={handleChange}
           />
           <div className="buttons">
+            <button type="submit" className="login-button">
+              Login
+            </button>
             <button
               onClick={() => navigate("/signup")}
               className="register-button"
             >
               Register
-            </button>
-            <button type="submit" className="login-button">
-              Login
             </button>
           </div>
 

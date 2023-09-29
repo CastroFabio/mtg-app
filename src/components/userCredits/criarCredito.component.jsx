@@ -19,7 +19,7 @@ const CriarCredito = () => {
       points: Number(getCreditPoint),
     });
 
-    navigate("/creditos");
+    navigate("/credito");
   };
 
   const handleChange = (event) => {

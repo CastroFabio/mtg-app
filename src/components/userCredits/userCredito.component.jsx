@@ -42,21 +42,23 @@ const UserCredits = () => {
 
   return (
     <div className="rodadas">
-      {getUsersCreditsBalance &&
-        getUsersCreditsBalance.map(({ userId, userName, points }) => {
-          return (
-            <p key={userId}>
-              <a
-                onClick={() => {
-                  dispatch(saveSelectedUserID({ userName, userId }));
-                  navigate("/historico");
-                }}
-              >
-                {userName} {points}
-              </a>
-            </p>
-          );
-        })}
+      <ul>
+        {getUsersCreditsBalance &&
+          getUsersCreditsBalance.map(({ userId, userName, points }) => {
+            return (
+              <p key={userId}>
+                <li
+                  onClick={() => {
+                    dispatch(saveSelectedUserID({ userName, userId }));
+                    navigate("/historico");
+                  }}
+                >
+                  <h4>{userName}</h4> {points}
+                </li>
+              </p>
+            );
+          })}
+      </ul>
     </div>
   );
 };

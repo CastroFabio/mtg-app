@@ -23,10 +23,6 @@
   --content-components-background-color: var(--color-4);
 }
 
-.border {
-  border: 1px solid black;
-}
-
 body {
   margin: 0;
   padding: 0;

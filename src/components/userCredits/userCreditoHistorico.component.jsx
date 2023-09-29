@@ -6,6 +6,7 @@ import { setUrl } from "../../store/campeonatos/navigationSlice";
 import formatDate from "../../utils/formatDate";
 import formatName from "../../utils/formatName";
 import "./userCredits.style.css";
+import "../../components/campeonatos/campeonatosCard.css";
 
 const UserCreditoHistorico = () => {
   const [error, setError] = useState(null);
@@ -44,11 +45,12 @@ const UserCreditoHistorico = () => {
       <h2>{formatName(userName)}</h2>
       <ul>
         {getUserCredits &&
-          getUserCredits.map(({ userId, id, points, createdAt }) => {
+          getUserCredits.map(({ id, points, createdAt }) => {
             return (
-              <div className="user-credito" key={id}>
-                {points} {formatDate(createdAt)}
-              </div>
+              <p key={id}>
+                <li>Pontos: {points}</li>
+                <li>Data: {formatDate(createdAt)}</li>
+              </p>
             );
           })}
       </ul>
