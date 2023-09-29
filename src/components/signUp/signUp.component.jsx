@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
+import "../signIn/signIn.style.css";
 
 import { fazRequest } from "../../utils/client";
 
@@ -41,34 +42,75 @@ const SignUp = () => {
   };
 
   return (
-    <div>
+    <Fragment>
+      {/* <div>
       <h1>Cadastro</h1>
-
+      
       <input
-        type="text"
-        placeholder="Username"
-        name="username"
-        value={username}
-        onChange={handleChange}
+      type="text"
+      placeholder="Username"
+      name="username"
+      value={username}
+      onChange={handleChange}
       />
 
       <input
-        type="password"
-        placeholder="Password"
-        name="password"
-        value={password}
-        onChange={handleChange}
+      type="password"
+      placeholder="Password"
+      name="password"
+      value={password}
+      onChange={handleChange}
       />
-
+      
       <input
-        type="password"
-        placeholder="Confirmar Password"
-        name="confirmPassword"
-        value={confirmPassword}
-        onChange={handleChange}
+      type="password"
+      placeholder="Confirmar Password"
+      name="confirmPassword"
+      value={confirmPassword}
+      onChange={handleChange}
       />
       <button onClick={handleSignUp}>Criar Cadastro</button>
-    </div>
+    </div> */}
+
+      <div className="container">
+        <div className="card">
+          <form onSubmit={handleSignUp}>
+            <input
+              type="text"
+              placeholder="Username"
+              name="username"
+              value={username}
+              required
+              onChange={handleChange}
+            />
+
+            <input
+              type="password"
+              placeholder="Password"
+              name="password"
+              value={password}
+              required
+              onChange={handleChange}
+            />
+
+            <input
+              type="password"
+              placeholder="Confirmar Password"
+              name="confirmPassword"
+              value={confirmPassword}
+              required
+              onChange={handleChange}
+            />
+
+            <div className="buttons">
+              <button type="submit" className="login-button">
+                Register
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </Fragment>
   );
 };
 
