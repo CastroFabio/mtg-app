@@ -19,7 +19,7 @@ const CriarCredito = () => {
       points: Number(getCreditPoint),
     });
 
-    navigate("/creditos");
+    navigate("/credito");
   };
 
   const handleChange = (event) => {
@@ -47,9 +47,9 @@ const CriarCredito = () => {
   }
 
   return (
-    <section>
+    <section className="criarUserCreditForm border">
       <form onSubmit={handleSubmit}>
-        <label>Criar novo Crédito</label>
+        <h2>Criar novo Crédito</h2>
         <select value={getSelected} onChange={handleChange}>
           {getUserOptions.map((option) => (
             <option key={option.value} value={option.value}>
@@ -57,14 +57,16 @@ const CriarCredito = () => {
             </option>
           ))}
         </select>
-
-        <input
-          type="text"
-          name="date"
-          value={getCreditPoint}
-          onChange={(e) => setCreditPoint(e.target.value)}
-        />
-        <button type="submit">Enviar</button>
+        <div>
+          <input
+            className="criarUserCreditInput"
+            type="text"
+            name="date"
+            value={getCreditPoint}
+            onChange={(e) => setCreditPoint(e.target.value)}
+          />
+          <button type="submit">Enviar</button>
+        </div>
       </form>
     </section>
   );

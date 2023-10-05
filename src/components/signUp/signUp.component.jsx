@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
+import "../signIn/signIn.style.css";
 
 import { fazRequest } from "../../utils/client";
 
@@ -24,9 +25,6 @@ const SignUp = () => {
 
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem("username", JSON.stringify(data.username));
-
-        navigate("/signin");
       } else {
         console.error("Cadastro failed");
       }
@@ -41,34 +39,51 @@ const SignUp = () => {
   };
 
   return (
-    <div>
-      <h1>Cadastro</h1>
+    <Fragment>
+      <div className="container">
+        <div className="card">
+          <form
+            onSubmit={() => {
+              handleSignUp();
+              navigate("/signin");
+            }}
+          >
+            <input
+              type="text"
+              placeholder="Username"
+              name="username"
+              value={username}
+              required
+              onChange={handleChange}
+            />
 
-      <input
-        type="text"
-        placeholder="Username"
-        name="username"
-        value={username}
-        onChange={handleChange}
-      />
+            <input
+              type="password"
+              placeholder="Password"
+              name="password"
+              value={password}
+              required
+              onChange={handleChange}
+            />
 
-      <input
-        type="password"
-        placeholder="Password"
-        name="password"
-        value={password}
-        onChange={handleChange}
-      />
+            <input
+              type="password"
+              placeholder="Confirmar Password"
+              name="confirmPassword"
+              value={confirmPassword}
+              required
+              onChange={handleChange}
+            />
 
-      <input
-        type="password"
-        placeholder="Confirmar Password"
-        name="confirmPassword"
-        value={confirmPassword}
-        onChange={handleChange}
-      />
-      <button onClick={handleSignUp}>Criar Cadastro</button>
-    </div>
+            <div className="buttons">
+              <button type="submit" className="login-button">
+                Register
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </Fragment>
   );
 };
 

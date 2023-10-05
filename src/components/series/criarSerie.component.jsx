@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { createSeries } from "../../utils/seriesEndpoints";
 import { useSelector } from "react-redux";
 import { getSelectedTournament } from "../../store/campeonatos/campeonatosSlice";
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 const CriarSerie = () => {
   const [error, setError] = useState(null);
@@ -39,11 +42,12 @@ const CriarSerie = () => {
           value={getSerieName}
           onChange={(e) => setSerieName(e.target.value)}
         />
-        <input
-          type="text"
-          name="date"
-          value={getSerieDate}
-          onChange={(e) => setSerieDate(e.target.value)}
+        <DatePicker
+          className="calendar"
+          selected={getSerieDate}
+          dateFormat="dd/MM/yyyy"
+          onChange={(data) => setSerieDate(data)}
+          showTimeSelect
         />
         <button type="submit">Enviar</button>
       </form>

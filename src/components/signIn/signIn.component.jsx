@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./signIn.style.css";
 import {
   handleLogin,
   selectCurrentUserError,
@@ -7,7 +8,7 @@ import {
 } from "../../store/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const defaultFormFields = {
   username: "",
@@ -21,6 +22,7 @@ const Login = () => {
   const { username, password } = formFields;
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -46,9 +48,9 @@ const Login = () => {
   const currentUser = useSelector(selectCurrentUser);
 
   return (
-    <div className="login-page">
-      <div className="form">
-        <form className="login-form" onSubmit={handleSubmit}>
+    <div className="container">
+      <div className="card">
+        <form onSubmit={handleSubmit}>
           <input
             type="text"
             placeholder="Username"
@@ -65,10 +67,18 @@ const Login = () => {
             required
             onChange={handleChange}
           />
-          <button>login</button>
-          <p className="message">
-            Not registered? <a href="/signup">Create an account</a>
-          </p>
+          <div className="buttons">
+            <button type="submit" className="login-button">
+              Login
+            </button>
+            <button
+              onClick={() => navigate("/signup")}
+              className="register-button"
+            >
+              Register
+            </button>
+          </div>
+
           {currentUserError ? <p>{currentUserError}</p> : null}
 
           {currentUser && getFinishedUseEffect ? (

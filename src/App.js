@@ -20,8 +20,9 @@ import CriarRodada from "./components/rodadas/criarRodada";
 
 import BoasVindas from "./components/boasVindas/boasVindas.component";
 
-import UserCredits from "./components/userCredits/userCredits.components";
+import UserCredits from "./components/userCredits/userCredito.component";
 import CriarCredito from "./components/userCredits/criarCredito.component";
+import UserCreditoHistorico from "./components/userCredits/userCreditoHistorico.component";
 
 import ErrorBoundary from "./components/errorBoundary/errorBoundary.component";
 
@@ -41,8 +42,9 @@ const App = () => {
           <Route path="/criarSerie" element={<CriarSerie />} />
           <Route path="/rodada" element={<Rodadas />} />
           <Route path="/criarRodada" element={<CriarRodada />} />
-          <Route path="/creditos" element={<UserCredits />} />
+          <Route path="/credito" element={<UserCredits />} />
           <Route path="/criarCredito" element={<CriarCredito />} />
+          <Route path="/historico" element={<UserCreditoHistorico />} />{" "}
         </Route>
       </Routes>
     </ErrorBoundary>

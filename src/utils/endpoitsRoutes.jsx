@@ -13,4 +13,5 @@ export const endpointRoutes = {
   userBalance: "/user-point/balance",
   userBalanceById: "/user-point/balance/%s",
   userPoints: "/user-point",
+  userPointsByUserID: "/user-point?userId=%s",
 };
